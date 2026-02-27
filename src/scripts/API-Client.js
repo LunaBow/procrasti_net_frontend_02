@@ -1,4 +1,3 @@
-// src/scripts/API-Client.js  (or /public/scripts/API-Client.js depending on your setup)
 
 class APIClient {
     constructor() {
