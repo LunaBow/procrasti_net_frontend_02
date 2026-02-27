@@ -1,0 +1,55 @@
+---
+
+---
+
+<header>
+    <div class="container">
+        <div id="login-bar">
+            <span id="login-status">No member logged in</span>
+            <form id="login-form" method="POST" action="#">
+                <input type="text" id="username" name="username" placeholder="Username" />
+                <input type="password" id="password" name="password" placeholder="Password" />
+                <input type="submit" value="Login" />
+            </form>
+        </div>
+        <div id="register-bar">
+            <form id="register-form" method="POST" action="#">
+                <input type="text" id="usernameReg" name="usernameReg" placeholder="Username" />
+                <input type="password" id="passwordReg" name="passwordReg" placeholder="Password" />
+                <input type="submit" value="register" />
+            </form>
+        </div>
+
+        <label class="switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider round"></span>
+        </label>
+        <h1 id="headerHeading">Lunar.Bower</h1>
+
+        <section id="hero-pictures">
+            <div class="slideshow-container">
+                <div id="slidewrapper">
+                    <div class="slideshow">
+                        <video class="mySlides" autoplay loop muted playsinline>
+                            <source src="MOVIES/LunarMBower.mp4" type="video/mp4" />
+                        </video>
+                        <video class="mySlides" autoplay loop muted playsinline>
+                            <source src="MOVIES/LunarMBower2.mp4" type="video/mp4" />
+                        </video>
+                        <video class="mySlides" autoplay loop muted playsinline>
+                            <source src="MOVIES/LunarMBower3.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+                <button onclick="plusSlide(-1)" id="prev" class="handleBtn">&lt;</button>
+                <button onclick="plusSlide(1)"id="next" class="handleBtn">&gt;</button>
+            </div>
+        </section>
+    </div>
+</header>
+
+<script type="module" src="/scripts/switchTheme.js"></script>
+<script type="module" src="/scripts/register.js"></script>
+<script type="module" src="/scripts/slideshow.js"></script>
+<script type="module" src="/scripts/login.js"></script>
+<script type="module" src="/scripts/switchContent.js"></script>

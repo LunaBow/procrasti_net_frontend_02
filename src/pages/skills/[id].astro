@@ -1,0 +1,9 @@
+---
+import { api } from "../../lib/apiClient";
+
+const { id } = Astro.params;
+const skill = await api.getSkill(Number(id));
+---
+
+<h1>{skill.name}</h1>
+<p>{skill.description}</p>

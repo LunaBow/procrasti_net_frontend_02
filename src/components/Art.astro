@@ -1,0 +1,52 @@
+---
+
+---
+<section class="ArtContent">
+    <div id="ArtContent">
+        <div class="swag normaler-fliesstext"><p>On this page you will find a selection of pictures, drawings, Videos, Music and other Art our community has created. Click on the category you are interested in to view more!
+
+            Stay a while, stay forever!</p></div>
+        <div id="uploadArt">
+            <h2>UPLOAD YOUR SHIT</h2>
+            <label for="artType">Art type</label>
+
+            <select name="artType" id="artType">
+                <option value="Book">Book</option>
+                <option value="Drawing">Drawing</option>
+                <option value="AV">Audio/Video</option>
+            </select>
+            <form id="uploadForm">
+                <input type="text" id="artTitle" name="artTitle" placeholder="Enter title"/>
+                <input type="text" id="artDescription" name="artDescription" placeholder="Enter Description"/>
+                <label id="customArtImage" for="artImage" class="custom-file-upload">
+                    <img id="uploadIcon" src="https://img.icons8.com/?size=30&id=368&format=png&color=000000" alt="Upload Icon">
+                </label>
+
+                <input type="file" id="artImage" style="display: none">
+
+                <input type="text" id="artLink" name="artLink" placeholder="Enter link" style="display: none"/>
+                <input id="submitbtn" type="submit" value="Upload" />
+            </form>
+        </div>
+        <section class="gallery-container">
+            <div id="artGallery">
+                <h2>Visions & Sigils (Drawings)</h2>
+                <div id="drawing-grid" class="art-grid"></div>
+            </div>
+
+            <div id="avGallery">
+                <h2>Echoes of the Void (AV)</h2>
+                <div id="av-grid" class="art-grid"></div>
+            </div>
+
+            <div id="BookGallery">
+                <h2>The Great Library (Books)</h2>
+                <div id="book-grid" class="art-grid"></div>
+            </div>
+        </section>
+
+        </div>
+        </section>
+<script type="module" src="/scripts/uploadArt.js"></script>
+<script type="module" src="/scripts/displayGallery.js"></script>
+<script type="module" src="/scripts/switchTheme.js"></script>

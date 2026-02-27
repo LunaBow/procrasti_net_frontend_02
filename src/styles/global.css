@@ -1,0 +1,329 @@
+@import url('https://fonts.cdnfonts.com/css/horror-type');
+@import url('https://fonts.googleapis.com');
+@import url('https://fonts.gstatic.com');
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Barrio&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100..900;1,100..900&family=Barrio&family=Press+Start+2P&display=swap');
+@import url('https://fonts.cdnfonts.com/css/monaco');
+
+:root {
+    --bg-color: black;
+    --text-color: #d22121;
+    --accent-color: #d22121;
+    --header-bg: #d22121;
+    --hover-bg: #980808;
+    --hover2-bg: #730000;
+    --header-text: black;
+    --border-color: #e12d2d;
+    --nav-font-hover: #000000;
+    --a-color: white;
+    --font-main: 'barrio';
+}
+body.pastel-mode {
+    --bg-color: #fff2f9;
+    --text-color: #da90ad;
+    --accent-color: #eeb6cd;
+    --header-bg: #e2f6f8;
+    --hover-bg: #7ca6a8;
+    --hover2-bg: #688c8f;
+    --header-text: #9db8bd;
+    --border-color: #9db8bd;
+    --nav-font-hover: white;
+    --a-color: #688c8f;
+    --font-main: 'Advent Pro', sans-serif;
+}
+
+/* 3. Zuweisung der Variablen */
+body {
+    font-family: var(--font-main);
+    font-size: 130%;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: all 0.3s ease; /* Macht den Übergang weich */
+}
+
+.pastel-mode{
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+}
+/*slider switch*/
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ff0000;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #000000;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: #99c8cc;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #ff0000;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+/*slider switch*/
+.logout-btn {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    border: 1px solid var(--border-color);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: var(--font-main);
+    margin-left: 10px;
+}
+input, select {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+}
+
+input[type=submit], #prev, #next, #navWrapper nav, select, option{
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-main);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: none;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+#navWrapper a{
+    color: var(--header-text);
+    text-decoration: none;
+}
+
+#navWrapper:hover{
+    color: var(--nav-font-hover) !important;
+    text-decoration: none;
+}
+
+#navWrapper a:hover{
+    color: var(--nav-font-hover) !important;
+    text-decoration: none;
+}
+
+a{
+    color: var(--a-color);
+}
+u{
+    color:var(--a-color);
+}
+
+#headerHeading{
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+}
+#entireContentWrapper{
+    margin: auto;
+    width: 70%;
+}
+
+.slideshow-container {
+    position: relative;
+    margin: auto;
+}
+
+.mySlides{
+    width: 100%;
+    margin: 0;
+    display: none;
+}
+
+#prev, #next {
+    background-color: var(--accent-color);
+    border-color: var(--border-color);
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 0 3px 3px 0;
+}
+
+#next{
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+#navWrapper nav{
+    background-color: var(--header-bg);
+    display: flex;
+    justify-content: space-evenly;
+    gap: 3em;
+}
+
+.dropdown-wrapper{
+    padding: 2%;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+.dropdown-wrapper:hover{
+    color: var(--nav-font-hover) !important;
+    background-color: var(--hover-bg);
+}
+.dropdown-wrapper:hover > a {
+    color: var(--nav-font-hover) !important;
+}
+.content {
+    border: 1px solid;
+    border-color: var(--border-color);
+}
+.dropdown-content{
+    width: 100%;
+    background-color: var(--hover-bg);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    cursor: pointer;
+}
+
+.dropdown-content a{
+    color: var(--nav-font-hover) !important;
+    display: block;
+}
+
+.dropdown-content a:hover{
+    background-color: var(--hover2-bg);
+}
+
+.dropdown-wrapper:hover .dropdown-content {
+    display: block;
+}
+
+.footer-site-footercontainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+#JoinContent{
+    padding: 3%;
+    display: flex;
+    gap: 3em;
+}
+
+.flex-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+#headerHeading{
+    text-align: center;
+}
+
+#drawing-grid{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+}
+
+.art-card.drawing {
+    flex: 0 0 31%;
+    box-sizing: border-box;
+    margin-bottom: 3%; /* Abstand nach unten zur nächsten Reihe */
+    text-align: center;
+}
+
+#av-grid{
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.content {
+    padding: 2%;
+}
+
+#headerHeading{
+    cursor: pointer;
+    transition: transform .2s; /* Animation */
+}
+
+#headerHeading:hover{
+    transform: scale(1.1);
+}
+
+#uploadIcon{
+    transition: transform .1s;
+}
+
+#uploadIcon:hover{
+    transform: scale(1.1);
+}
+
+#uploadForm{
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+#artTitle, #artDescription{
+    height: 100%;
+}
+#submitbtn:hover{
+    transform: scale(1.1);
+}
+
+#submitbtn{
+    height: 2em;
+}

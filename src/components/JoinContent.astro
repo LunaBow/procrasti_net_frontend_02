@@ -1,0 +1,66 @@
+---
+import Evaluation from "./Evaluation.astro";
+import RequiredSteps from "./RequiredSteps.astro";
+import Art from "./Art.astro";
+import Member from "./Member.astro";
+import Boot from "./Boot.astro";
+---
+<section class="content">
+    <div id="JoinContent">
+        <div id="inhalt-links">
+            <iframe id="intro-video" src="https://www.youtube.com/embed/8tfES-UYdfE?si=HWxuh9CjMKHgeEoY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <p class="normaler-fliesstext">After long years of stumbling through the dark, we invite you to take our evaluation test and, should you prove worthy, join the ranks of our happy little community,  become an esteemed member of our contented fellowship. Here, we nurture a vigilance that fosters collective well - being, ensuring an environment untouched by the peculiar, foreboding, or perilous forces that lurk in the periphery.</p>
+
+            <div style="margin-top: 10%;" id="life">
+                <h2>Life can be worth living!</h2>
+                <u><a style="cursor: pointer; font-size: 250%" id="triggerEvaluation">Join us now!</a></u>
+                <p class="normaler-fliesstext">Beauty resides within the discerning gaze of the Observer. Within the confines of the Lunar Bower, we ardently maintain the belief that every individual possesses the innate potential to craft magnificence. Through the practice of meditation, our aim is to forge a masterpiece from the myriad elements that define us both as unique entities and as an intertwined collective.</p>
+            </div>
+        </div>
+        <div id="inhalt-rechts">
+            <p class="normaler-fliesstext">Welcome, child! You were lost, but worry not, for now you are found! We wish to congratulate you on stumbling upon this community, where we strife to become the best versions of ourselves, in perfect accord with the cosmic order and the earths essence. No longer will you have to conceal yourself, for here we esalt your true essence and offer our guidance in your pursuit of self-realization.
+                Rejoice!
+
+                Before we start, please fill out this questionnaire:
+                <u><a style="cursor: pointer;" id="triggerEvaluation">"Take Evaluation Test"</a></u></p>
+            <div style="margin-bottom: 20%" class="flex-container">
+                <div class="left-image">
+                    <img style="max-width: 200px" src="PICS/Insecurity.png" alt="Insecure drawing">
+                </div>
+                <div style="margin-left: 10%; margin-top: 10%" class="right-content">
+                    <h2>We appreciate you!
+                        Whoever you are!</h2>
+                    <p>(no matter how talented you are,or how useful to our society)</p>
+                    <img style="max-width: 200px" src="PICS/drown.png" alt="don't drown in snakes">
+                </div>
+            </div>
+            <h2>Our Beliefs</h2>
+            <p class="normaler-fliesstext">Our mantra is not only to worship the individual for their own artistry. but the  visions painted across the tapestry of the soul, drawn together by their shared obsession with hues and their intoxicating power to reveal the universe's  truth.
+                Everybody is an artist, in their own right.
+                We also want to uncover the trurth behind our shared visions.
+                Read more here: <a href="#">"Link zu Beliefs"</a></p>
+        </div>
+    </div>
+
+    <div id="EvaluationVisible" style="display: none">
+        <Evaluation />
+    </div>
+
+    <div id="RequiredVisible" style="display: none">
+        <RequiredSteps />
+    </div>
+
+    <div id="ArtVisible" style="display: none">
+        <Art />
+    </div>
+
+    <div id="MemberVisible" style="display: none">
+        <Member />
+    </div>
+
+    <div id="BootVisible" style="display: none">
+        <Boot />
+    </div>
+</section>
+
+<script type="module" src="/scripts/switchContent.js"></script>
