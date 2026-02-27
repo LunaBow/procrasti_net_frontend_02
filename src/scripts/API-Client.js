@@ -1,139 +1,201 @@
+// src/scripts/API-Client.js  (or /public/scripts/API-Client.js depending on your setup)
+
 class APIClient {
-    baseUrl;
     constructor() {
-        this.baseUrl = "https://mt242001-10925.node.ustp.cloud";
+        // Astro client-side env vars must start with PUBLIC_
+        const envBase = (import.meta?.env?.PUBLIC_API_URL || "").trim();
+        this.baseUrl = (envBase || "https://mt231043-10992.node.ustp.cloud").replace(/\/$/, "");
     }
 
-    getHeaders(isFormData = false) {
-        const token = localStorage.getItem("jwt");
-
-        const headers = {
-            ...(token ? { "Authorization": `Bearer ${token}` } : {}),
-            ...(!isFormData ? { "Content-Type": "application/json" } : {})
-        };
-
-        return headers;
+    get token() {
+        return localStorage.getItem("jwt");
     }
 
-    async login(username, password) {
-        const res = await fetch(`${this.baseUrl}/login`, {
-            method: 'POST',
-            headers: this.getHeaders(),
-            body: JSON.stringify({ username, password })
+    set token(v) {
+        if (!v) localStorage.removeItem("jwt");
+        else localStorage.setItem("jwt", v);
+    }
+
+    headers({ isFormData = false } = {}) {
+        const h = {};
+        if (this.token) h["Authorization"] = `Bearer ${this.token}`;
+        if (!isFormData) h["Content-Type"] = "application/json";
+        return h;
+    }
+
+    async req(path, { method = "GET", body, isFormData = false } = {}) {
+        const res = await fetch(`${this.baseUrl}${path}`, {
+            method,
+            headers: this.headers({ isFormData }),
+            body,
         });
 
         if (!res.ok) {
-            throw new Error("Login failed");
+            const text = await res.text().catch(() => "");
+            throw new Error(`${method} ${path} -> ${res.status} ${res.statusText} ${text}`);
         }
 
-        const data = await res.json();
-        if (data.token) {
-            localStorage.setItem('jwt', data.token);
-        }
+        const ct = res.headers.get("content-type") || "";
+        if (ct.includes("application/json")) return res.json();
+        return res.text();
+    }
+
+    /* ===== AUTH (JWT) ===== */
+    async login(username, password) {
+        const data = await this.req("/login", {
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+        });
+
+        if (data?.token) this.token = data.token;
         return data;
     }
 
     async register(username, password) {
-        const res = await fetch(`${this.baseUrl}/user`, {
-            method: 'POST',
-            headers: this.getHeaders(),
+        // existing API from your friend project
+        return this.req("/user", {
+            method: "POST",
             body: JSON.stringify({
                 username,
                 password,
-                profileDescription: "member" // Dein Standard-Wert
-            })
+                profileDescription: "member",
+            }),
         });
-
-        if (!res.ok) {
-            throw new Error('Registration failed');
-        }
-        const contentType = res.headers.get('content-type');
-        if(contentType && contentType.includes("application/json")) {
-            return res.json();
-        }
-        return {success: true}; // Falls kein JSON zurückgegeben wird, aber der Status OK ist
     }
 
     logout() {
-        localStorage.removeItem('jwt');
-        window.location.reload(); // Seite neu laden, um UI zu resetten
+        this.token = null;
+        // Don't force reload if you don't want, but it's fine for now
+        window.location.reload();
     }
 
     async getCurrentUser() {
-        const res = await fetch(`${this.baseUrl}/me`, { headers: this.getHeaders() });
-        return res.ok ? await res.json() : null;
+        try {
+            return await this.req("/me");
+        } catch {
+            return null;
+        }
     }
 
-    async uploadBook(data) {
-        const res = await fetch(`${this.baseUrl}/book`, {
-            method: "POST",
-            headers: this.getHeaders(),
-            body: JSON.stringify(data),
-        });
-        return res.json();
+    /* ===== OLD CONTENT ENDPOINTS (from friend project) ===== */
+    uploadBook(data) {
+        return this.req("/book", { method: "POST", body: JSON.stringify(data) });
     }
 
     async uploadDrawing(data, file) {
-        const res = await fetch(`${this.baseUrl}/artwork`, {
-            method: "POST",
-            headers: this.getHeaders(),
-            body: JSON.stringify(data),
-        });
-        const artwork = await res.json();
-        // Schritt 2: Bild-Upload (falls vorhanden)
-        if (file && artwork.artworkId) {
+        const artwork = await this.req("/artwork", { method: "POST", body: JSON.stringify(data) });
+
+        if (file && artwork?.artworkId) {
             const formData = new FormData();
             formData.append("image", file);
-            await fetch(`${this.baseUrl}/artwork/${artwork.artworkId}/image`, {
+
+            await this.req(`/artwork/${artwork.artworkId}/image`, {
                 method: "POST",
-                headers: this.getHeaders(true), // true wegen FormData
                 body: formData,
+                isFormData: true,
             });
         }
         return artwork;
     }
 
-    async uploadAV(data) {
-        const res = await fetch(`${this.baseUrl}/av`, {
-            method: "POST",
-            headers: this.getHeaders(),
-            body: JSON.stringify(data),
-        });
-        return res.json();
+    uploadAV(data) {
+        return this.req("/av", { method: "POST", body: JSON.stringify(data) });
     }
 
     async getAllUsers() {
-        try{
-            const res = await fetch(`${this.baseUrl}/user`, {
-                method: 'GET',
-                headers: this.getHeaders()
-            });
-            if (!res.ok) {
-                throw new Error('Failed to fetch users');
-            }
-            return await res.json();
-        }catch (e){
-            console.error("Error in getAllUsers:", e);
+        try {
+            return await this.req("/user");
+        } catch (e) {
+            console.error("getAllUsers failed:", e);
             return [];
         }
     }
 
-    async getBooks(){
-        const res = await fetch(`${this.baseUrl}/book`, {headers: this.getHeaders()});
-        if (!res.ok) return [];
-        return await res.json();
+    async getBooks() {
+        try {
+            return await this.req("/book");
+        } catch {
+            return [];
+        }
     }
 
-    async getArtworks(){
-        const res = await fetch(`${this.baseUrl}/artwork`, {headers: this.getHeaders()});
-        if (!res.ok) return [];
-        return await res.json();
+    async getArtworks() {
+        try {
+            return await this.req("/artwork");
+        } catch {
+            return [];
+        }
     }
 
     async getAVs() {
-        const res = await fetch(`${this.baseUrl}/av`, { headers: this.getHeaders() });
-        if (!res.ok) return [];
-        return await res.json();
+        try {
+            return await this.req("/av");
+        } catch {
+            return [];
+        }
+    }
+
+    /* ===== PROCRASTI-NET ENDPOINTS (implement backend later) =====
+       Leave these here so your frontend can start now.
+    */
+    listSkills(q = "") {
+        const qs = q ? `?q=${encodeURIComponent(q)}` : "";
+        return this.req(`/skills${qs}`);
+    }
+
+    listCategories() {
+        return this.req("/categories");
+    }
+
+    listTodos() {
+        return this.req("/todos");
+    }
+
+    createTodo(data) {
+        return this.req("/todos", { method: "POST", body: JSON.stringify(data) });
+    }
+
+    updateTodo(id, data) {
+        return this.req(`/todos/${id}`, { method: "PATCH", body: JSON.stringify(data) });
+    }
+
+    deleteTodo(id) {
+        return this.req(`/todos/${id}`, { method: "DELETE" });
+    }
+
+    listHabits() {
+        return this.req("/habits");
+    }
+
+    createHabit(data) {
+        return this.req("/habits", { method: "POST", body: JSON.stringify(data) });
+    }
+
+    checkHabit(id, dateISO) {
+        return this.req(`/habits/${id}/check`, {
+            method: "POST",
+            body: JSON.stringify({ date: dateISO }),
+        });
+    }
+
+    listPlan(fromISO, toISO) {
+        return this.req(`/plan?from=${encodeURIComponent(fromISO)}&to=${encodeURIComponent(toISO)}`);
+    }
+
+    scheduleTodo(todoId, startsAtISO, endsAtISO) {
+        return this.req("/plan", {
+            method: "POST",
+            body: JSON.stringify({ todoId, startsAt: startsAtISO, endsAt: endsAtISO }),
+        });
+    }
+
+    getSettings() {
+        return this.req("/settings");
+    }
+
+    updateSettings(data) {
+        return this.req("/settings", { method: "PATCH", body: JSON.stringify(data) });
     }
 }
+
 export const api = new APIClient();

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { api } from "../lib/apiClient";
+    import { api } from "../lib/apiClient.ts";
 
     let title = "";
 

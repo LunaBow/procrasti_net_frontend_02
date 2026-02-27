@@ -156,3 +156,23 @@ document.getElementById("triggerBoot").addEventListener("click", function() {
     document.getElementById("ArtVisible").style.display = "none";
     window.location.hash = "boot";
 })
+
+const map = [
+    ["triggerSkills", "SkillsVisible"],
+    ["triggerTodos", "TodosVisible"],
+    ["triggerHabits", "HabitsVisible"],
+    ["triggerPlanner", "PlannerVisible"],
+    ["triggerCalendar", "CalendarVisible"],
+    ["triggerSettings", "SettingsVisible"],
+];
+
+function show(id) {
+    for (const [, panel] of map) {
+        const el = document.getElementById(panel);
+        if (el) el.style.display = panel === id ? "block" : "none";
+    }
+}
+
+for (const [btn, panel] of map) {
+    document.getElementById(btn)?.addEventListener("click", () => show(panel));
+}

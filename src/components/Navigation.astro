@@ -1,33 +1,40 @@
----
-
----
 <section id="nav_ul">
     <div id="navWrapper">
+
+            <div id="navWrapper">
+                <nav>
+                    <div class="dropdown-wrapper"><a id="triggerSkills">Skills</a></div>
+                    <div class="dropdown-wrapper"><a id="triggerTodos">To-dos</a></div>
+                    <div class="dropdown-wrapper"><a id="triggerHabits">Habits</a></div>
+                    <div class="dropdown-wrapper"><a id="triggerPlanner">Planner</a></div>
+                    <div class="dropdown-wrapper"><a id="triggerCalendar">Calendar</a></div>
+                    <div class="dropdown-wrapper"><a id="triggerSettings">Settings</a></div>
+                </nav>
+            </div>
+
         <nav>
             <div class="dropdown-wrapper">
-                <a id="triggerEvaluation" class="dropbtn">Evaluation</a>
+                <a id="triggerEvaluation" class="dropbtn">Reality Check</a>
                 <div class="dropdown-content">
-                    <a id="triggerRequired">Required Steps</a>
-                    <a id="triggerBoot">Boot</a>
+                    <a id="triggerRequired">Bare Minimum Tasks</a>
+                    <a id="triggerBoot">Emergency Reboot</a>
                 </div>
             </div>
 
             <div class="dropdown-wrapper">
-                <a id="triggerArt" class="dropbtn">Art</a>
+                <a id="triggerArt" class="dropbtn">Dissociation Arcade</a>
                 <div class="dropdown-content">
-                    <a id="showPicsOnly">Pictures</a>
-                    <a id="showAVOnly">Video/Audio</a>
-                    <a id="showBooksOnly">Books</a>
+                    <a id="showPicsOnly">Artsy shit</a>
+                    <a id="showAVOnly">Audio/Video</a>
+                    <a id="showBooksOnly">Texts</a>
                 </div>
             </div>
 
             <div class="dropdown-wrapper">
-                <a id="TriggerMember" class="dropbtn">Members</a>
+                <a id="TriggerMember" class="dropbtn">The Gang (sheesh)</a>
             </div>
-
         </nav>
     </div>
 </section>
-<script>
-    import "../scripts/switchContent.js";
-</script>
+
+<script type="module" src="/scripts/switchContent.js"></script>
