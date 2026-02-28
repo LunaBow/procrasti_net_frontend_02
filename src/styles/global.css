@@ -64,7 +64,7 @@ html, body{ height: 100%; }
 
 body{
     margin: 0;
-    font-family: var(--font-ui);
+    font-family: var(--font-ui), serif;
     color: var(--text);
     background:
             radial-gradient(900px 420px at 18% 8%, rgba(252, 209, 160, 0.26), transparent 62%),
@@ -276,14 +276,14 @@ input:checked + .slider:before{
     place-items:center;
     box-shadow: 0 12px 0 rgba(55, 62, 59, 0.10), 0 22px 38px rgba(55, 62, 59, 0.12);
     transform: rotate(-4deg);
-    font-family: var(--font-display);
+    font-family: var(--font-display), serif;
     font-weight: 700;
     color: var(--teal);
 }
 
 #headerHeading{
     margin: 0;
-    font-family: var(--font-display);
+    font-family: var(--font-display), serif;
     font-size: clamp(2.2rem, 4vw, 3.4rem);
     letter-spacing: 0.02em;
     line-height: 1.05;
@@ -552,7 +552,7 @@ img{
 #login-status,
 .auth-drop, .auth-drop summary,
 .auth-hint{
-    font-family: var(--font-ui) !important;
+    font-family: var(--font-ui), serif !important;
     letter-spacing: 0 !important;
 }
 
@@ -562,5 +562,6 @@ img{
 
 /* Keep the fancy font ONLY for the main title */
 #headerHeading{
-    font-family: var(--font-display) !important;
+    font-family: var(--font-display), monospace !important;
 }
+#artImage { display: none; }

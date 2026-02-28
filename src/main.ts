@@ -1,33 +1,112 @@
-//TIP With Search Everywhere, you can find any action, file, or symbol in your project. Press <shortcut actionId="Shift"/> <shortcut actionId="Shift"/>, type in <b>terminal</b>, and press <shortcut actionId="EditorEnter"/>. Then run <shortcut raw="npm run dev"/> in the terminal and click the link in its output to open the app in the browser.
-export function setupCounter(element: HTMLElement) {
-  //TIP Try <shortcut actionId="GotoDeclaration"/> on <shortcut raw="counter"/> to see its usages. You can also use this shortcut to jump to a declaration – try it on <shortcut raw="counter"/> on line 13.
-  let counter = 0;
+// src/main.ts
+import { api } from "./scripts/API-Client"; // adjust path if yours differs
 
-  const adjustCounterValue = (value: number)  => {
-    if (value >= 100) return value - 100;
-    if (value <= -100) return value + 100;
-    return value;
-  };
-
-  const setCounter = (value: number) => {
-    counter = adjustCounterValue(value);
-    //TIP WebStorm has lots of inspections to help you catch issues in your project. It also has quick fixes to help you resolve them. Press <shortcut actionId="ShowIntentionActions"/> on <shortcut raw="text"/> and choose <b>Inline variable</b> to clean up the redundant code.
-    const text = `${counter}`;
-    element.innerHTML = text;
-  };
-
-  document.getElementById('increaseByOne')?.addEventListener('click', () => setCounter(counter + 1));
-  document.getElementById('decreaseByOne')?.addEventListener('click', () => setCounter(counter - 1));
-  document.getElementById('increaseByTwo')?.addEventListener('click', () => setCounter(counter + 2));
-
-  //TIP In the app running in the browser, you’ll find that clicking <b>-2</b> doesn't work. To fix that, rewrite it using the code from lines 19 - 21 as examples of the logic.
-  document.getElementById('decreaseByTwo')
-
-  //TIP Let’s see how to review and commit your changes. Press <shortcut actionId="GotoAction"/> and look for <b>commit</b>. Try checking the diff for a file – double-click main.ts to do that.
-  setCounter(0);
+function $(id: string) {
+    return document.getElementById(id);
 }
 
-//TIP To find text strings in your project, you can use the <shortcut actionId="FindInPath"/> shortcut. Press it and type in <b>counter</b> – you’ll get all matches in one place.
-setupCounter(document.getElementById('counter-value') as HTMLElement);
+function show(panelId: string, panels: string[]) {
+    for (const p of panels) {
+        const el = $(p);
+        if (el) el.style.display = p === panelId ? "block" : "none";
+    }
+}
 
-//TIP There's much more in WebStorm to help you be more productive. Press <shortcut actionId="Shift"/> <shortcut actionId="Shift"/> and search for <b>Learn WebStorm</b> to open our learning hub with more things for you to try.
+/* ===== Theme toggle ===== */
+function setupThemeToggle() {
+    const toggle = $("theme-toggle") as HTMLInputElement | null;
+    if (!toggle) return;
+
+    // restore saved preference
+    const saved = localStorage.getItem("theme") || "light";
+    document.body.classList.toggle("pastel-mode", saved === "dark");
+    toggle.checked = saved === "dark";
+
+    toggle.addEventListener("change", () => {
+        const dark = toggle.checked;
+        document.body.classList.toggle("pastel-mode", dark);
+        localStorage.setItem("theme", dark ? "dark" : "light");
+    });
+}
+
+/* ===== Auth UI ===== */
+async function setupAuthUI() {
+    const loginForm = $("login-form") as HTMLFormElement | null;
+    const registerForm = $("register-form") as HTMLFormElement | null;
+    const status = $("login-status");
+
+    async function refresh() {
+        if (!status) return;
+
+        try {
+            const user = await api.getCurrentUser();
+            if (user?.username) {
+                status.textContent = `Logged in as ${user.username}`;
+            } else {
+                status.textContent = "Not logged in";
+            }
+        } catch {
+            status.textContent = "Not logged in";
+        }
+    }
+
+    loginForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const u = ($("username") as HTMLInputElement | null)?.value ?? "";
+        const p = ($("password") as HTMLInputElement | null)?.value ?? "";
+
+        try {
+            await api.login(u, p);
+            await refresh();
+            loginForm.reset();
+        } catch (err) {
+            console.error(err);
+            alert("Login failed");
+        }
+    });
+
+    registerForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const u = ($("usernameReg") as HTMLInputElement | null)?.value ?? "";
+        const p = ($("passwordReg") as HTMLInputElement | null)?.value ?? "";
+
+        try {
+            await api.register(u, p);
+            alert("Registered. Now log in.");
+            registerForm.reset();
+        } catch (err) {
+            console.error(err);
+            alert("Registration failed");
+        }
+    });
+
+    // optional logout button if you have one
+    $("logout-btn")?.addEventListener("click", () => api.logout());
+
+    await refresh();
+}
+
+/* ===== App navigation (panels) ===== */
+function setupNavigation() {
+    const mapping: Array<[string, string]> = [
+        ["triggerSkills", "SkillsVisible"],
+        ["triggerTodos", "TodosVisible"],
+        ["triggerHabits", "HabitsVisible"],
+        ["triggerPlanner", "PlannerVisible"],
+        ["triggerCalendar", "CalendarVisible"],
+        ["triggerSettings", "SettingsVisible"],
+    ];
+
+    const panels = mapping.map(([, panel]) => panel);
+
+    for (const [btnId, panelId] of mapping) {
+        $(btnId)?.addEventListener("click", () => show(panelId, panels));
+    }
+}
+
+/* ===== Boot ===== */
+document.addEventListener("DOMContentLoaded", () => {
+    setupThemeToggle();
+    setupNavigation();
+    setupAuthUI().catch(console.error);
+});

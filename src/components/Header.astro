@@ -6,8 +6,8 @@
         </summary>
 
         <form id="login-form" method="POST" action="#">
-            <input type="text" id="username" name="username" placeholder="Username" />
-            <input type="password" id="password" name="password" placeholder="Password" />
+            <input type="text" id="username" name="username" placeholder="Username" aria-label="Username" />
+            <input type="password" id="password" name="password" placeholder="Password" aria-label="Password" />
             <input type="submit" value="Log in" />
         </form>
     </details>
@@ -19,19 +19,22 @@
         </summary>
 
         <form id="register-form" method="POST" action="#">
-            <input type="text" id="usernameReg" name="usernameReg" placeholder="Username" />
-            <input type="password" id="passwordReg" name="passwordReg" placeholder="Password" />
+            <input type="text" id="usernameReg" name="usernameReg" placeholder="Username" aria-label="Username" />
+            <input type="password" id="passwordReg" name="passwordReg" placeholder="Password" aria-label="Password" />
             <input type="submit" value="Sign up" />
         </form>
     </details>
 
     <section id="headerHeading">
         <h1>Procrasti-net</h1>
-        <div id="theme-switcher"></div>
+        <div id="theme-switcher">
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
     </section>
     <h2> Fuck it, we ball. </h2>
-
-
 </header>
 
 <script type="module" src="/scripts/switchTheme.js"></script>
