@@ -33,8 +33,7 @@ export async function initGallery() {
             <div class="image-box">
                 <img style="max-height: 200px; width: auto;" 
                      src="${imageUrl}" 
-                     alt="${draw.title}"
-                     onerror="this.src='assets/placeholder.png'; this.onerror=null;">
+                     alt="${draw.title}">
             </div>
             <h3>${draw.title}</h3>
             <p>${draw.description}</p>
@@ -44,7 +43,7 @@ export async function initGallery() {
 
         //AV Rendern
         avGrid.innerHTML = avs.map(av => {
-            let embedHtml = '';
+            let embedHtml;
             const url = av.mediaUrl;
 
             if (url.includes('youtube.com') || url.includes('youtu.be')) {
@@ -53,7 +52,7 @@ export async function initGallery() {
                 embedHtml = `
             <iframe
                 src="https://www.youtube.com/embed/${videoId}" 
-                frameborder="0" allowfullscreen>
+                style="border: 0;" allowfullscreen>
             </iframe>`;
             } else if (url.endsWith('.mp3') || url.endsWith('.wav')) {
                 // Audio Player
