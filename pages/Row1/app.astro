@@ -1,0 +1,35 @@
+---
+import Header from "../../components/Header.astro";
+import Nav from "../../components/Navigation.astro";
+import SkillBrowser from "../../components/SkillBrowser.astro";
+import TodoBoard from "../../components/TodoBoard.astro";
+import HabitTracker from "../../components/HabitTracker.astro";
+import Planner from "../../components/Planner.astro";
+import SettingsPanel from "../../components/SettingsPanel.astro";
+import CalendarPanel from "../../components/CalendarPanel.astro";
+import ArtComponent from "../../components/Art.astro";
+import "../../styles/global.css";
+
+import "../../scripts/switchContent.js";
+import "../../scripts/skills.js";
+import "../../scripts/todos.js";
+import "../../scripts/habits.js";
+import "../../scripts/planner.js";
+import "../../scripts/settings.js";
+import "../../scripts/calendar.js";
+---
+
+<div id="entireContentWrapper">
+    <Header />
+    <Nav />
+
+    <section class="content">
+        <div id="SkillsVisible" style="display:block"><SkillBrowser /></div>
+        <div id="TodosVisible" style="display:none"><TodoBoard /></div>
+        <div id="HabitsVisible" style="display:none"><HabitTracker /></div>
+        <div id="PlannerVisible" style="display:none"><Planner /></div>
+        <div id="CalendarVisible" style="display:none"><CalendarPanel /></div>
+        <div id="SettingsVisible" style="display:none"><SettingsPanel /></div>
+        <div id="ArtVisible" style="display:none"><ArtComponent /></div>
+    </section>
+</div>
