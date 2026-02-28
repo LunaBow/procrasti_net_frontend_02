@@ -1,7 +1,4 @@
 ---
-import Layout from "../components/Layout.astro";
-import Header from "../components/Header.astro";
-import Nav from "../components/Navigation.astro";
 import SkillBrowser from "../components/SkillBrowser.astro";
 import TodoBoard from "../components/TodoBoard.astro";
 import HabitTracker from "../components/HabitTracker.astro";
@@ -9,10 +6,6 @@ import Planner from "../components/Planner.astro";
 import SettingsPanel from "../components/SettingsPanel.astro";
 import CalendarPanel from "../components/CalendarPanel.astro";
 ---
-
-<Layout title="Procrasti-NET">
-  <Header />
-  <Nav />
 
   <section class="content">
     <div id="SkillsVisible" style="display:block"><SkillBrowser /></div>
@@ -32,4 +25,3 @@ import CalendarPanel from "../components/CalendarPanel.astro";
     import "../scripts/settings.js";
     import "../scripts/calendar.js";
   </script>
-</Layout>
