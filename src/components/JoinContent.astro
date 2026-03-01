@@ -6,11 +6,9 @@ import Planner from "./Planner.svelte";
 import Settings from "./Settings.svelte";
 import Calendar from "./Calendar.svelte";
 import "../styles/global.css";
-import Auth from "../components/Auth.svelte";
 
 ---
 
-<Auth client:load/>
   <section class="content">
     <div id="SkillsVisible" style="display:block"><Skills client:load /></div>
     <div id="TodosVisible" style="display:none"><Todos client:load /></div>
