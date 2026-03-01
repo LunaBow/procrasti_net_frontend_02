@@ -4,13 +4,9 @@
     import Auth from './Auth.svelte';
 
     let habits = [];
-    let newHabitName = "";
+    let newHabitTitle = "";
     let loading = true;
     let user = null;
-
-    function todayISO() {
-        return new Date().toISOString().slice(0, 10);
-    }
 
     async function loadHabits() {
         loading = true;
@@ -27,13 +23,13 @@
     }
 
     async function addHabit() {
-        if (!newHabitName.trim()) return;
+        if (!newHabitTitle.trim()) return;
         try {
             await api.createHabit({ 
-                title: newHabitName.trim(),
+                title: newHabitTitle.trim(),
                 recurrence_type: "daily"
             });
-            newHabitName = "";
+            newHabitTitle = "";
             await loadHabits();
         } catch (e) {
             console.error("Failed to add habit:", e);
@@ -42,7 +38,7 @@
 
     async function checkHabit(id) {
         try {
-            await api.checkHabit(id, todayISO());
+            await api.checkHabit(id, new Date().toISOString());
             await loadHabits();
         } catch (e) {
             console.error("Failed to check habit:", e);
@@ -59,7 +55,7 @@
         <input 
             type="text" 
             placeholder="New habit name (e.g. Meditate, Read)" 
-            bind:value={newHabitName}
+            bind:value={newHabitTitle}
         />
         <button type="submit">Create</button>
     </form>

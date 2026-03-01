@@ -27,11 +27,19 @@ class APIClient {
     }
 
     async req(path, { method = "GET", body, isFormData = false } = {}) {
+        if (!this.token && method !== "GET" && !path.startsWith("/auth/")) {
+            throw new Error(`Unauthorized: No token for ${method} ${path}`);
+        }
         const res = await fetch(`${this.baseUrl}${path}`, {
             method,
             headers: this.headers({ isFormData }),
             body,
         });
+
+        if (res.status === 401 && !path.startsWith("/auth/")) {
+            // Token might be invalid/expired
+            this.token = null;
+        }
 
         if (!res.ok) {
             const text = await res.text().catch(() => "");
@@ -168,7 +176,7 @@ class APIClient {
     }
 
     updateTodo(id, data) {
-        return this.req(`/todos/${id}`, { method: "PATCH", body: JSON.stringify(data) });
+        return this.req(`/todos/${id}`, { method: "PUT", body: JSON.stringify(data) });
     }
 
     deleteTodo(id) {
@@ -183,10 +191,10 @@ class APIClient {
         return this.req("/routines", { method: "POST", body: JSON.stringify(data) });
     }
 
-    checkHabit(id, dateISO) {
+    checkHabit(id, dateISO, done = true, note = "") {
         return this.req(`/routines/${id}/complete`, {
             method: "POST",
-            body: JSON.stringify({ date: dateISO, done: true }),
+            body: JSON.stringify({ date: dateISO, done, note }),
         });
     }
 
@@ -199,6 +207,25 @@ class APIClient {
     scheduleTodo(todoId, startsAtISO, _endsAtISO) {
         // Just patch the due_date
         return this.updateTodo(todoId, { due_date: startsAtISO });
+    }
+
+    listCheckins(from, to) {
+        let qs = "";
+        if (from || to) {
+            const params = new URLSearchParams();
+            if (from) params.append("from", from);
+            if (to) params.append("to", to);
+            qs = `?${params.toString()}`;
+        }
+        return this.req(`/checkins${qs}`);
+    }
+
+    createCheckin(data) {
+        return this.req("/checkins", { method: "POST", body: JSON.stringify(data) });
+    }
+
+    deleteCheckin(id) {
+        return this.req(`/checkins/${id}`, { method: "DELETE" });
     }
 
     getSettings() {
