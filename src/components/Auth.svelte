@@ -111,34 +111,38 @@
 
 <style>
     .auth-panel {
-        background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        max-width: 400px;
+        background: var(--surface);
+        padding: 2.5rem;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--border);
+        max-width: 440px;
         margin: 2rem auto;
         text-align: center;
     }
 
     h2 {
+        font-family: var(--font-heading);
+        font-size: 1.75rem;
+        color: var(--text);
         margin-top: 0;
-        color: #1e293b;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
 
     .error-box {
-        background: #fee2e2;
-        color: #ef4444;
-        padding: 0.75rem;
-        border-radius: 6px;
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
+        background: var(--accent);
+        color: white;
+        padding: 0.85rem;
+        border-radius: var(--radius-md);
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 500;
     }
 
     form {
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 1.5rem;
         text-align: left;
     }
 
@@ -149,58 +153,71 @@
     }
 
     label {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #64748b;
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        margin-left: 0.25rem;
     }
 
     input {
-        padding: 0.75rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--surface-alt);
+        color: var(--text);
+        font-family: inherit;
         font-size: 1rem;
-        transition: border-color 0.2s;
+        transition: all 0.2s ease;
     }
 
     input:focus {
         outline: none;
-        border-color: #3b82f6;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(74, 93, 80, 0.1);
+        background: var(--surface);
     }
 
     .submit-btn {
-        background: #3b82f6;
+        background: var(--primary);
         color: white;
         border: none;
-        padding: 0.75rem;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 1rem;
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        font-weight: 700;
+        font-size: 1.05rem;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: all 0.2s ease;
         margin-top: 0.5rem;
+        font-family: inherit;
     }
 
     .submit-btn:hover {
-        background: #2563eb;
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
     }
 
     .toggle-mode {
-        margin-top: 1.5rem;
-        font-size: 0.875rem;
-        color: #64748b;
+        margin-top: 2rem;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 1.5rem;
     }
 
     .link-btn {
         background: none;
         border: none;
-        color: #3b82f6;
-        font-weight: 600;
+        color: var(--primary);
+        font-weight: 700;
         cursor: pointer;
         padding: 0;
-        margin-left: 0.25rem;
+        margin-left: 0.35rem;
+        transition: color 0.2s ease;
     }
 
     .link-btn:hover {
+        color: var(--primary-hover);
         text-decoration: underline;
     }
 
@@ -209,17 +226,19 @@
     }
 
     .btn-logout {
-        background: #f1f5f9;
-        color: #475569;
+        background: var(--accent);
+        color: white;
         border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        font-weight: 600;
+        padding: 0.6rem 1.25rem;
+        border-radius: 999px;
+        font-weight: 700;
         cursor: pointer;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
+        transition: all 0.2s ease;
     }
 
     .btn-logout:hover {
-        background: #e2e8f0;
+        background: var(--accent-hover);
+        transform: translateY(-1px);
     }
 </style>

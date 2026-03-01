@@ -87,91 +87,127 @@
 
 <style>
     .panel {
-        padding: 1.5rem;
-        background: #fefce8;
-        border-radius: 12px;
-        border: 1px solid #fef08a;
+        padding: 2.5rem;
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
     }
     h2 {
+        font-family: var(--font-heading);
         margin-top: 0;
-        color: #854d0e;
+        color: var(--text);
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
     }
     .controls {
         display: flex;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
     }
     input[type="date"] {
-        padding: 0.5rem;
-        border: 1px solid #eab308;
-        border-radius: 6px;
+        padding: 0.6rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--surface-alt);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: border-color 0.2s ease;
+    }
+    input[type="date"]:focus {
+        outline: none;
+        border-color: var(--primary);
     }
     button {
-        padding: 0.5rem 1rem;
-        background: #eab308;
+        padding: 0.6rem 1.25rem;
+        background: var(--primary);
         color: white;
         border: none;
-        border-radius: 6px;
+        border-radius: var(--radius-md);
         cursor: pointer;
-        font-weight: 600;
+        font-weight: 700;
+        font-family: inherit;
+        transition: all 0.2s ease;
+    }
+    button:hover:not(:disabled) {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
     }
     button:disabled {
-        background: #fde68a;
+        opacity: 0.5;
         cursor: not-allowed;
     }
     .plan-list {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.75rem;
     }
     .plan-item {
         display: flex;
         align-items: center;
-        padding: 1rem;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        padding: 1.25rem;
+        background: var(--surface-alt);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border);
         gap: 1.5rem;
+        transition: transform 0.2s ease;
+    }
+    .plan-item:hover {
+        transform: translateX(4px);
     }
     .time {
-        font-weight: bold;
-        color: #eab308;
-        min-width: 60px;
+        font-weight: 800;
+        color: var(--primary);
+        min-width: 70px;
+        font-size: 1rem;
     }
     .details {
         display: flex;
         flex-direction: column;
+        gap: 0.25rem;
     }
     .title {
-        font-weight: 500;
-        color: #334155;
+        font-weight: 700;
+        color: var(--text);
+        font-size: 1.05rem;
     }
     .category-tag {
         font-size: 0.75rem;
-        color: #854d0e;
-        background: #fef9c3;
-        padding: 0.1rem 0.4rem;
-        border-radius: 4px;
+        color: var(--primary);
+        background: var(--surface);
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
         width: fit-content;
-        margin-top: 0.25rem;
+        font-weight: 700;
+        border: 1px solid var(--border);
     }
     .loading-state, .empty-state, .auth-wrapper {
         text-align: center;
-        padding: 2rem;
-        color: #71717a;
+        padding: 3rem 2rem;
+        color: var(--text-muted);
     }
     .auth-wrapper {
-        background: white;
-        border-radius: 8px;
+        background: var(--surface-alt);
+        border-radius: var(--radius-md);
         margin-top: 1rem;
+        border: 1px solid var(--border);
     }
     .auth-wrapper p {
         margin-bottom: 1.5rem;
+        font-weight: 700;
     }
     .ghost-btn {
         background: transparent;
-        color: #eab308;
-        border: 1px dashed #eab308;
-        margin-top: 1rem;
+        color: var(--primary);
+        border: 2px dashed var(--border);
+        margin-top: 1.5rem;
+        font-weight: 700;
+    }
+    .ghost-btn:hover {
+        background: var(--surface);
+        border-color: var(--primary);
+        color: var(--primary-hover);
     }
 </style>

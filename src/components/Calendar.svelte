@@ -115,21 +115,26 @@
 
 <style>
     .panel {
-        padding: 2rem;
-        background: #fdf2f8;
-        border-radius: 12px;
-        border: 1px solid #fce7f3;
+        padding: 2.5rem;
+        background: var(--surface);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
         max-width: 500px;
         margin: 0 auto;
     }
     h2 {
+        font-family: var(--font-heading);
         margin-top: 0;
-        color: #9d174d;
+        color: var(--text);
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
     }
     .description {
-        color: #64748b;
+        color: var(--text-muted);
         margin-bottom: 2rem;
-        line-height: 1.5;
+        line-height: 1.6;
+        font-size: 0.95rem;
     }
     .export-box {
         display: flex;
@@ -142,43 +147,58 @@
         gap: 0.5rem;
     }
     label {
-        font-weight: 600;
-        color: #475569;
+        font-weight: 700;
+        color: var(--text-muted);
         font-size: 0.9rem;
+        margin-left: 0.25rem;
     }
     input[type="date"] {
-        padding: 0.75rem;
-        border: 1px solid #f9a8d4;
-        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--surface-alt);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: border-color 0.2s ease;
+    }
+    input[type="date"]:focus {
+        outline: none;
+        border-color: var(--primary);
     }
     button {
         margin-top: 0.5rem;
         padding: 1rem;
-        background: #db2777;
+        background: var(--primary);
         color: white;
         border: none;
-        border-radius: 8px;
-        font-weight: 600;
+        border-radius: var(--radius-md);
+        font-weight: 700;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        font-size: 1rem;
     }
-    button:hover {
-        background: #be185d;
+    button:hover:not(:disabled) {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
     }
     button:disabled {
-        background: #f472b6;
+        opacity: 0.5;
         cursor: not-allowed;
     }
     .auth-wrapper {
         text-align: center;
-        padding: 2rem;
-        background: white;
-        border-radius: 8px;
+        padding: 3rem 2rem;
+        background: var(--surface-alt);
+        border-radius: var(--radius-md);
         margin-top: 1rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border: 1px solid var(--border);
     }
     .auth-wrapper p {
         margin-bottom: 1.5rem;
-        color: #64748b;
+        color: var(--text-muted);
+        font-weight: 700;
     }
 </style>
