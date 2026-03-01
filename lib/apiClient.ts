@@ -13,7 +13,7 @@ export interface Task {
 }
 
 class ApiClient {
-    private baseUrl = "http://localhost:3000";
+    private baseUrl = (import.meta.env.PUBLIC_API_URL || "https://mt231043-10992.node.ustp.cloud/api").replace(/\/$/, "");
 
     private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
         const response = await fetch(`${this.baseUrl}${endpoint}`, {
