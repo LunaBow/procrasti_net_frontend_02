@@ -6,10 +6,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "prestart": "npm run build",
-    "start": "HOST=0.0.0.0 PORT=3000 node ./dist/server/entry.mjs",
-    "astro": "astro",
+    "start": "HOST=0.0.0.0 node ./dist/server/entry.mjs",
     "lint": "eslint --ext .js,.ts,.astro src",
-    "format": "prettier --write '**/*.{js,ts,astro}'"
+    "format": "prettier --write \"src/**/*.{js,ts,astro,svelte,css}\""
   },
   "dependencies": {
     "@astrojs/check": "^0.9.2",
