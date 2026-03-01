@@ -4,8 +4,9 @@ import Header from '../components/Header.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from "../components/Footer.astro";
 import JoinContent from "../components/JoinContent.astro";
-
+import Auth from "../components/Auth.svelte";
 ---
+<Auth client:load />
 <Layout>
 <div id="entireContentWrapper">
     <Header />

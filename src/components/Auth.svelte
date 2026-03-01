@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { api } from "../lib/api"; // adjust path depending on your file location
+    import { api } from "../../lib/api";
 
     let email = "";
     let password = "";
