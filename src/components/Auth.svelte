@@ -2,6 +2,7 @@
     import { api } from '../scripts/API-Client.js';
     import { onMount } from 'svelte';
 
+    let email = "";
     let username = "";
     let password = "";
     let isRegister = false;
@@ -24,7 +25,7 @@
         error = "";
         try {
             if (isRegister) {
-                await api.register(username, password);
+                await api.register({ username, password, email });
                 // After register, attempt login
                 await api.login(username, password);
             } else {
@@ -65,6 +66,12 @@
             {/if}
 
             <form on:submit|preventDefault={handleAuth}>
+                {#if isRegister}
+                    <div class="field">
+                        <label for="auth-email">Email Address</label>
+                        <input id="auth-email" type="email" bind:value={email} required placeholder="Enter email" />
+                    </div>
+                {/if}
                 <div class="field">
                     <label for="auth-username">Username</label>
                     <input id="auth-username" type="text" bind:value={username} required placeholder="Enter username" />
