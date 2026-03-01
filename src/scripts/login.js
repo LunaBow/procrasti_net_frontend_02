@@ -77,14 +77,14 @@ if (loginForm) {
         }
 
         try {
-            setStatusText("Logging in… doing the thing…");
+            setStatusText("Logging in…");
             await api.login(usernameEl.value.trim(), passwordEl.value);
-            setStatusText("Login successful. Congratulations on having credentials. ✅");
+            setStatusText("Login successful.");
             await updateAuthUI();
             loginForm.reset();
         } catch (error) {
             console.error("Login failed:", error);
-            setStatusText("Login failed. Skill issue (probably the password).");
+            setStatusText("Login failed. Skill issue.");
         }
     });
 }

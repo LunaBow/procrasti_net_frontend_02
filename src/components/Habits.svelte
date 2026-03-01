@@ -68,7 +68,7 @@
         <p>Loading habits...</p>
     {:else if !user}
         <div class="auth-wrapper">
-            <p>Please log in to track your habits.</p>
+            <p>Please log in to use this feature.</p>
             <Auth />
         </div>
     {:else}
@@ -94,85 +94,3 @@
         </div>
     {/if}
 </section>
-
-<style>
-    .panel {
-        padding: 1.5rem;
-        background: #f0f9ff;
-        border-radius: 12px;
-    }
-    h2 {
-        margin-top: 0;
-        margin-bottom: 1.5rem;
-        color: #0c4a6e;
-    }
-    .add-form {
-        display: flex;
-        gap: 0.5rem;
-        margin-bottom: 2rem;
-        max-width: 500px;
-    }
-    input {
-        flex: 1;
-        padding: 0.75rem;
-        border: 2px solid #bae6fd;
-        border-radius: 8px;
-    }
-    button[type="submit"] {
-        padding: 0.75rem 1.5rem;
-        background: #0ea5e9;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-    .habit-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.5rem;
-    }
-    .habit-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-top: 4px solid #0ea5e9;
-    }
-    h3 {
-        margin: 0 0 0.5rem 0;
-        color: #1e293b;
-    }
-    .streak {
-        margin: 0 0 1.5rem 0;
-        color: #64748b;
-        font-size: 0.9rem;
-    }
-    .streak span {
-        font-weight: bold;
-        color: #0ea5e9;
-        font-size: 1.1rem;
-    }
-    .check-btn {
-        width: 100%;
-        padding: 0.6rem;
-        background: #e0f2fe;
-        color: #0369a1;
-        border: none;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .check-btn:hover {
-        background: #bae6fd;
-    }
-    .empty {
-        grid-column: 1 / -1;
-        text-align: center;
-        color: #64748b;
-    }
-</style>

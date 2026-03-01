@@ -93,7 +93,7 @@
         <p>Checking authentication...</p>
     {:else if !user}
         <div class="auth-wrapper">
-            <p>Please log in to export your calendar.</p>
+            <p>Please log in to use this feature.</p>
             <Auth />
         </div>
     {:else}

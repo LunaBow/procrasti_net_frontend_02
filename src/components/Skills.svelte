@@ -61,35 +61,3 @@
         </div>
     {/if}
 </section>
-
-<style>
-    .panel {
-        padding: 1.5rem;
-        background: #f9f9f9;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    }
-    h2 {
-        margin-top: 0;
-        color: #333;
-    }
-    .controls {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-    }
-    input, select {
-        padding: 0.6rem;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-size: 1rem;
-    }
-    input {
-        flex: 1;
-    }
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.5rem;
-    }
-</style>

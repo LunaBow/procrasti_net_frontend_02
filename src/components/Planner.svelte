@@ -60,7 +60,7 @@
         <div class="loading-state">Updating your schedule...</div>
     {:else if !user}
         <div class="auth-wrapper">
-            <p>Please log in to see your planner.</p>
+            <p>Please log in to use this feature.</p>
             <Auth />
         </div>
     {:else}

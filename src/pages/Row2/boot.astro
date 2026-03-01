@@ -1,16 +1,17 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
-import Boot from "../../components/Boot.astro";
-
-
+import BootComponent from "../../components/Boot.astro";
 import "../../styles/global.css";
 ---
 
+<Layout title="Emergency Reboot">
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
-    <Boot/>
+    <BootComponent />
     <Footer />
 </div>
+</Layout>

@@ -66,11 +66,18 @@ class APIClient {
 
     logout() {
         this.token = null;
-        // Don't force reload if you don't want, but it's fine for now
         window.location.reload();
     }
 
+    get isDevMode() {
+        if (typeof window === "undefined") return false;
+        return localStorage.getItem("devMode") === "true";
+    }
+
     async getCurrentUser() {
+        if (this.isDevMode) {
+            return { username: "DevUser", profileDescription: "Developer", devMode: true };
+        }
         try {
             return await this.req("/auth/me");
         } catch {

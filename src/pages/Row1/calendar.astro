@@ -1,14 +1,17 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
 import "../../styles/global.css";
-import Calendar from "../../components/Calendar.svelte";
+import CalendarSvelte from "../../components/Calendar.svelte";
 ---
 
+<Layout title="Calendar">
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
-    <Calendar client:load />
+    <CalendarSvelte client:load />
     <Footer />
 </div>
+</Layout>

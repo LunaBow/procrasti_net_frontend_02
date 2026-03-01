@@ -19,7 +19,7 @@ form.addEventListener('submit', async (event) => {
         alert('Registration successful! You can now log in.');
         form.reset(); // Leert die Felder nach Erfolg
     } catch (error) {
-        alert('Registration failed. Username might already be taken.');
+        alert('Registration failed. This is probably Lunas Fault.');
         console.error(error);
     }
 });

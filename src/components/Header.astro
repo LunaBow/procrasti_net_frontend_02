@@ -1,42 +1,50 @@
-<header>
-    <details class="auth-drop" id="login-bar">
-        <summary>
-            <span id="login-status">Not logged in</span>
-            <span class="auth-hint">Log in</span>
-        </summary>
 
-        <form id="login-form" method="POST" action="#">
-            <input type="text" id="username" name="username" placeholder="Username" aria-label="Username" />
-            <input type="password" id="password" name="password" placeholder="Password" aria-label="Password" />
-            <input type="submit" value="Log in" />
-        </form>
-    </details>
-
-    <details class="auth-drop" id="register-bar">
-        <summary>
-            <span class="auth-hint">New here?</span>
-            <span class="auth-hint strong">Sign up</span>
-        </summary>
-
-        <form id="register-form" method="POST" action="#">
-            <input type="email" id="emailReg" name="emailReg" placeholder="Email" aria-label="Email" />
-            <input type="text" id="usernameReg" name="usernameReg" placeholder="Username" aria-label="Username" />
-            <input type="password" id="passwordReg" name="passwordReg" placeholder="Password" aria-label="Password" />
-            <input type="submit" value="Sign up" />
-        </form>
-    </details>
-
-    <section id="headerHeading">
+<header id="headerHeading">
+    <div class="container">
         <h1>Procrasti-net</h1>
+        <h2>Fuck it, we ball.</h2>
+
         <div id="theme-switcher">
-            <label class="switch">
+            <label class="switch" aria-label="Toggle theme">
                 <input type="checkbox" id="theme-toggle">
                 <span class="slider round"></span>
             </label>
         </div>
-    </section>
-    <h2> Fuck it, we ball. </h2>
+    </div>
 </header>
+
+
+<div class="auth-area">
+        <details class="auth-drop" id="login-bar">
+            <summary>
+                <div class="auth-summary">
+                    <span id="login-status" class="auth-status">Not logged in</span>
+                    <span class="auth-hint">Log in</span>
+                </div>
+            </summary>
+            <form id="login-form" class="auth-form" method="POST" action="#">
+                <input type="text" id="username" name="username" placeholder="Username" aria-label="Username" required />
+                <input type="password" id="password" name="password" placeholder="Password" aria-label="Password" required />
+                <button type="submit" class="auth-btn">Log in</button>
+            </form>
+        </details>
+
+        <details class="auth-drop" id="register-bar">
+            <summary>
+                <div class="auth-summary">
+                    <span class="auth-status">New here?</span>
+                    <span class="auth-hint">Sign up</span>
+                </div>
+            </summary>
+            <form id="register-form" class="auth-form" method="POST" action="#">
+                <input type="email" id="emailReg" name="emailReg" placeholder="Email" aria-label="Email" required />
+                <input type="text" id="usernameReg" name="usernameReg" placeholder="Username" aria-label="Username" required />
+                <input type="password" id="passwordReg" name="passwordReg" placeholder="Password" aria-label="Password" required />
+                <button type="submit" class="auth-btn">Sign up</button>
+            </form>
+        </details>
+    </div>
+
 
 <script>
     import "../scripts/switchTheme.js";

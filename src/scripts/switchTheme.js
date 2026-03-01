@@ -8,7 +8,7 @@ const COLOR_HORROR = "d22121";
 
 // 1. Initialisierung beim Laden der Seite
 if(savedTheme === "pastel") {
-    document.body.classList.add("pastel-mode");
+    document.documentElement.classList.add("pastel-mode");
     if(toggle) toggle.checked = true;
     if(uploadIcon) uploadIcon.src = `https://img.icons8.com/?size=30&id=368&format=png&color=${COLOR_PASTEL}`;
 } else {
@@ -20,11 +20,11 @@ if(savedTheme === "pastel") {
 if (toggle) {
     toggle.addEventListener('change', () => {
         if (toggle.checked) {
-            document.body.classList.add('pastel-mode');
+            document.documentElement.classList.add('pastel-mode');
             localStorage.setItem('theme', 'pastel');
             if(uploadIcon) uploadIcon.src = `https://img.icons8.com/?size=30&id=368&format=png&color=${COLOR_PASTEL}`;
         } else {
-            document.body.classList.remove('pastel-mode');
+            document.documentElement.classList.remove('pastel-mode');
             localStorage.setItem('theme', 'normal');
             if(uploadIcon) uploadIcon.src = `https://img.icons8.com/?size=30&id=368&format=png&color=${COLOR_HORROR}`;
         }

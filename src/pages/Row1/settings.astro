@@ -1,14 +1,17 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
 import "../../styles/global.css";
-import Settings from "../../components/Settings.svelte";
+import SettingsSvelte from "../../components/Settings.svelte";
 ---
 
+<Layout title="Settings">
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
-    <Settings client:load />
+    <SettingsSvelte client:load />
     <Footer />
 </div>
+</Layout>

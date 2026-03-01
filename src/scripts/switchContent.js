@@ -82,25 +82,33 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-document.getElementById("triggerEvaluation").addEventListener("click", function() {
-    document.getElementById("EvaluationVisible").style.display = "block";
-    document.getElementById("RequiredVisible").style.display = "none";
-    document.getElementById("JoinContent").style.display = "none";
-    document.getElementById("ArtVisible").style.display = "none";
-    document.getElementById("BootVisible").style.display = "none";
-    window.location.hash = "evaluation";
+document.getElementById("triggerEvaluation")?.addEventListener("click", function(e) {
+    const el = document.getElementById("EvaluationVisible");
+    if (el) {
+        el.style.display = "block";
+        document.getElementById("RequiredVisible").style.display = "none";
+        document.getElementById("JoinContent").style.display = "none";
+        document.getElementById("ArtVisible").style.display = "none";
+        document.getElementById("BootVisible").style.display = "none";
+        window.location.hash = "evaluation";
+        e.preventDefault();
+    }
 })
-document.getElementById("triggerRequired").addEventListener("click", function() {
-    document.getElementById("RequiredVisible").style.display = "block";
-    document.getElementById("EvaluationVisible").style.display = "none";
-    document.getElementById("JoinContent").style.display = "none";
-    document.getElementById("ArtVisible").style.display = "none";
-    document.getElementById("MemberVisible").style.display = "none";
-    document.getElementById("BootVisible").style.display = "none";
-    window.location.hash = "required";
+document.getElementById("triggerRequired")?.addEventListener("click", function(e) {
+    const el = document.getElementById("RequiredVisible");
+    if (el) {
+        el.style.display = "block";
+        document.getElementById("EvaluationVisible").style.display = "none";
+        document.getElementById("JoinContent").style.display = "none";
+        document.getElementById("ArtVisible").style.display = "none";
+        document.getElementById("MemberVisible").style.display = "none";
+        document.getElementById("BootVisible").style.display = "none";
+        window.location.hash = "required";
+        e.preventDefault();
+    }
 })
 
-document.getElementById("triggerArt").addEventListener("click", function(e) {
+document.getElementById("triggerArt")?.addEventListener("click", function(e) {
     if (window.location.pathname.startsWith("/Row2/")) {
         // We are on a Row2 page (like art.astro), navigation is handled by the browser
         return;
@@ -123,18 +131,22 @@ document.getElementById("triggerArt").addEventListener("click", function(e) {
     }
 })
 
-document.getElementById("TriggerMember").addEventListener("click", function() {
-    document.getElementById("MemberVisible").style.display = "block";
-    document.getElementById("ArtVisible").style.display = "none";
-    document.getElementById("RequiredVisible").style.display = "none";
-    document.getElementById("EvaluationVisible").style.display = "none";
-    document.getElementById("JoinContent").style.display = "none";
-    document.getElementById("BootVisible").style.display = "none";
-    window.location.hash = "members";
-    displayMembers();
+document.getElementById("TriggerMember")?.addEventListener("click", function(e) {
+    const el = document.getElementById("MemberVisible");
+    if (el) {
+        el.style.display = "block";
+        document.getElementById("ArtVisible").style.display = "none";
+        document.getElementById("RequiredVisible").style.display = "none";
+        document.getElementById("EvaluationVisible").style.display = "none";
+        document.getElementById("JoinContent").style.display = "none";
+        document.getElementById("BootVisible").style.display = "none";
+        window.location.hash = "members";
+        displayMembers();
+        e.preventDefault();
+    }
 })
 
-document.getElementById("showDrawingsOnly").addEventListener("click", function(e) {
+document.getElementById("showDrawingsOnly")?.addEventListener("click", function(e) {
     const artPanel = document.getElementById("ArtVisible");
     if (artPanel && !window.location.pathname.startsWith("/Row2/")) {
         show("ArtVisible");
@@ -148,7 +160,7 @@ document.getElementById("showDrawingsOnly").addEventListener("click", function(e
     }
 })
 
-document.getElementById("showAVOnly").addEventListener("click", function(e) {
+document.getElementById("showAVOnly")?.addEventListener("click", function(e) {
     const artPanel = document.getElementById("ArtVisible");
     if (artPanel && !window.location.pathname.startsWith("/Row2/")) {
         show("ArtVisible");
@@ -162,7 +174,7 @@ document.getElementById("showAVOnly").addEventListener("click", function(e) {
     }
 })
 
-document.getElementById("showBooksOnly").addEventListener("click", function(e) {
+document.getElementById("showBooksOnly")?.addEventListener("click", function(e) {
     const artPanel = document.getElementById("ArtVisible");
     if (artPanel && !window.location.pathname.startsWith("/Row2/")) {
         show("ArtVisible");
@@ -176,22 +188,29 @@ document.getElementById("showBooksOnly").addEventListener("click", function(e) {
     }
 })
 
-document.getElementById("headerHeading").addEventListener("click", function() {
-    document.getElementById("EvaluationVisible").style.display = "none";
-    document.getElementById("RequiredVisible").style.display = "none";
-    document.getElementById("JoinContent").style.display = "block";
-    document.getElementById("ArtVisible").style.display = "none";
-    document.getElementById("BootVisible").style.display = "none";
-    window.location.hash = "home";
+document.getElementById("headerHeading")?.addEventListener("click", function() {
+    const jc = document.getElementById("JoinContent");
+    if (jc) {
+        document.getElementById("EvaluationVisible").style.display = "none";
+        document.getElementById("RequiredVisible").style.display = "none";
+        jc.style.display = "block";
+        document.getElementById("ArtVisible").style.display = "none";
+        document.getElementById("BootVisible").style.display = "none";
+        window.location.hash = "home";
+    }
 })
 
-document.getElementById("triggerBoot").addEventListener("click", function() {
-    document.getElementById("BootVisible").style.display = "block";
-    document.getElementById("EvaluationVisible").style.display = "none";
-    document.getElementById("RequiredVisible").style.display = "none";
-    document.getElementById("JoinContent").style.display = "none";
-    document.getElementById("ArtVisible").style.display = "none";
-    window.location.hash = "boot";
+document.getElementById("triggerBoot")?.addEventListener("click", function(e) {
+    const el = document.getElementById("BootVisible");
+    if (el) {
+        el.style.display = "block";
+        document.getElementById("EvaluationVisible").style.display = "none";
+        document.getElementById("RequiredVisible").style.display = "none";
+        document.getElementById("JoinContent").style.display = "none";
+        document.getElementById("ArtVisible").style.display = "none";
+        window.location.hash = "boot";
+        e.preventDefault();
+    }
 })
 
 const map = [
@@ -213,5 +232,10 @@ function show(id) {
 }
 
 for (const [btn, panel] of map) {
-    document.getElementById(btn)?.addEventListener("click", () => show(panel));
+    document.getElementById(btn)?.addEventListener("click", (e) => {
+        if (document.getElementById(panel)) {
+            show(panel);
+            e.preventDefault();
+        }
+    });
 }

@@ -1,13 +1,17 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
-import Skills from "../../components/Skills.svelte";
+import SkillsSvelte from "../../components/Skills.svelte";
 import Footer from "../../components/Footer.astro";
-import "../../styles/global.css";---
+import "../../styles/global.css";
+---
 
+<Layout title="Skills">
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
-    <Skills client:load />
+    <SkillsSvelte client:load />
     <Footer />
 </div>
+</Layout>

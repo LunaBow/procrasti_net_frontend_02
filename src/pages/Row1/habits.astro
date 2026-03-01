@@ -1,14 +1,17 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
 import "../../styles/global.css";
-import Habits from "../../components/Habits.svelte";
+import HabitsSvelte from "../../components/Habits.svelte";
 ---
 
+<Layout title="Habits">
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
-    <Habits client:load />
+    <HabitsSvelte client:load />
     <Footer />
 </div>
+</Layout>
