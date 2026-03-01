@@ -2,8 +2,9 @@
 class APIClient {
     constructor() {
         // Astro client-side env vars must start with PUBLIC_
-        const envBase = (import.meta?.env?.PUBLIC_API_URL || "").trim();
-        this.baseUrl = (envBase || "https://mt231043-10992.node.ustp.cloud").replace(/\/$/, "");
+        const envBase = (import.meta.env.PUBLIC_API_URL || "").trim();
+        this.baseUrl = (envBase || "https://mt231043-10992.node.ustp.cloud/api").replace(/\/$/, "");
+        this.wsUrl = (import.meta.env.PUBLIC_WS_URL || "wss://mt231043-10992.node.ustp.cloud:10992");
     }
 
     get token() {
@@ -142,10 +143,6 @@ class APIClient {
         return this.req(`/skills${qs}`);
     }
 
-    listCategories() {
-        return this.req("/categories");
-    }
-
     listTodos() {
         return this.req("/todos");
     }
@@ -163,17 +160,17 @@ class APIClient {
     }
 
     listHabits() {
-        return this.req("/habits");
+        return this.req("/routines");
     }
 
     createHabit(data) {
-        return this.req("/habits", { method: "POST", body: JSON.stringify(data) });
+        return this.req("/routines", { method: "POST", body: JSON.stringify(data) });
     }
 
     checkHabit(id, dateISO) {
-        return this.req(`/habits/${id}/check`, {
+        return this.req("/checkins", {
             method: "POST",
-            body: JSON.stringify({ date: dateISO }),
+            body: JSON.stringify({ routineId: id, date: dateISO }),
         });
     }
 

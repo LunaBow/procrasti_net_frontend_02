@@ -3,12 +3,12 @@ import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
 import "../../styles/global.css";
-import PlannerComponent from "../../components/Planner.astro";
+import Planner from "../../components/Planner.svelte";
 ---
 
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
-    <PlannerComponent />
+    <Planner client:load />
     <Footer />
 </div>

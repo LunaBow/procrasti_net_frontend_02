@@ -7,11 +7,11 @@ async function displayMembers() {
     try {
         const allUsers = await api.getAllUsers();
 
-        // Erst hier leeren wir den "Loading"-Text
+        // delete old
         userList.innerHTML = "";
 
         if(!allUsers || allUsers.length === 0){
-            userList.innerHTML = "<li>No members found.</li>";
+            userList.innerHTML = "<li>No members found. Very sad. Anyway</li>";
             return;
         }
 

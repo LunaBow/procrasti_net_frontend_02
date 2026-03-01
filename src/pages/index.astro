@@ -1,15 +1,16 @@
 ---
-import '../styles/global.css';
+import Layout from "../layouts/Layout.astro";
 import Header from '../components/Header.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from "../components/Footer.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
 import JoinContent from "../components/JoinContent.astro";
 
 ---
+<Layout>
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
         <JoinContent />
     <Footer />
 </div>
+</Layout>

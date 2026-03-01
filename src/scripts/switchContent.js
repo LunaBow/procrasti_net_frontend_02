@@ -8,7 +8,8 @@ function navigateTo(sectionId) {
         "MemberVisible",
         "picsOnly",
         "avOnly",
-        "booksOnly"
+        "booksOnly",
+        "drawingsOnly"
     ];
 
     sections.forEach(id => {
@@ -28,7 +29,10 @@ window.addEventListener("DOMContentLoaded", () => {
         "#evaluation": "EvaluationVisible",
         "#members": "MemberVisible",
         "#required": "RequiredVisible",
-        "#artworks": "ArtVisible"
+        "#artworks": "ArtVisible",
+        "#drawings": "ArtVisible",
+        "#av": "ArtVisible",
+        "#books": "ArtVisible"
     };
 
     // 1. Prüfen, ob es eine normale Hauptseite ist
@@ -44,20 +48,27 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
     // 2. Prüfen, ob es einer deiner Unter-Hashes ist
-    else if (["#picsOnly", "#avOnly", "#booksOnly"].includes(hash)) {
+    else if (["#picsOnly", "#avOnly", "#booksOnly", "#drawings", "#av", "#books"].includes(hash)) {
         // Zuerst zur Art-Sektion navigieren
         navigateTo("ArtVisible");
 
         // Jetzt den entsprechenden Klick-Handler "feuern" lassen
         const mapping = {
-            "#picsOnly": "showPicsOnly",
+            "#picsOnly": "showDrawingsOnly",
+            "#drawings": "showDrawingsOnly",
             "#avOnly": "showAVOnly",
-            "#booksOnly": "showBooksOnly"
+            "#av": "showAVOnly",
+            "#booksOnly": "showBooksOnly",
+            "#books": "showBooksOnly"
         };
 
         const btnId = mapping[hash];
         const btn = document.getElementById(btnId);
-        if (btn) btn.click(); // Das führt deinen bereits geschriebenen Code für den Filter aus!
+        if (btn) {
+            btn.click();
+        } else {
+            // If button not found (e.g. on separate page), the page script handles it
+        }
     }
     // 3. Fallback zur Startseite
     else {
@@ -83,19 +94,27 @@ document.getElementById("triggerRequired").addEventListener("click", function() 
     window.location.hash = "required";
 })
 
-document.getElementById("triggerArt").addEventListener("click", function() {
-    document.getElementById("uploadArt").style.display = "block";
-    document.getElementById("ArtVisible").style.display = "block";
-    document.getElementById("RequiredVisible").style.display = "none";
-    document.getElementById("EvaluationVisible").style.display = "none";
-    document.getElementById("JoinContent").style.display = "none";
-    document.getElementById("MemberVisible").style.display = "none";
-    document.getElementById("BookGallery").style.display = "block";
-    document.getElementById("avGallery").style.display = "block";
-    document.getElementById("artGallery").style.display = "block";
-    document.getElementById("BootVisible").style.display = "none";
-    window.location.hash = "artworks";
-    initGallery();
+document.getElementById("triggerArt").addEventListener("click", function(e) {
+    if (window.location.pathname.startsWith("/Row2/")) {
+        // We are on a Row2 page (like art.astro), navigation is handled by the browser
+        return;
+    }
+    // If we are on Row1 (app.astro), handle as SPA section switch
+    const artPanel = document.getElementById("ArtVisible");
+    if (artPanel) {
+        show("ArtVisible");
+        window.location.hash = "artworks";
+        const uploadArt = document.getElementById("uploadArt");
+        const bookGallery = document.getElementById("BookGallery");
+        const avGallery = document.getElementById("avGallery");
+        const artGallery = document.getElementById("artGallery");
+        if (uploadArt) uploadArt.style.display = "block";
+        if (bookGallery) bookGallery.style.display = "block";
+        if (avGallery) avGallery.style.display = "block";
+        if (artGallery) artGallery.style.display = "block";
+        initGallery();
+        e.preventDefault();
+    }
 })
 
 document.getElementById("TriggerMember").addEventListener("click", function() {
@@ -109,34 +128,46 @@ document.getElementById("TriggerMember").addEventListener("click", function() {
     displayMembers();
 })
 
-document.getElementById("showPicsOnly").addEventListener("click", function() {
-    navigateTo("ArtVisible");
-    document.getElementById("uploadArt").style.display = "none";
-    document.getElementById("BookGallery").style.display = "none";
-    document.getElementById("avGallery").style.display = "none";
-    document.getElementById("artGallery").style.display = "block";
-    window.location.hash = "picsOnly";
-    initGallery();
+document.getElementById("showDrawingsOnly").addEventListener("click", function(e) {
+    const artPanel = document.getElementById("ArtVisible");
+    if (artPanel && !window.location.pathname.startsWith("/Row2/")) {
+        show("ArtVisible");
+        document.getElementById("uploadArt").style.display = "none";
+        document.getElementById("BookGallery").style.display = "none";
+        document.getElementById("avGallery").style.display = "none";
+        document.getElementById("artGallery").style.display = "block";
+        window.location.hash = "drawings";
+        initGallery();
+        e.preventDefault();
+    }
 })
 
-document.getElementById("showAVOnly").addEventListener("click", function() {
-    navigateTo("ArtVisible");
-    document.getElementById("uploadArt").style.display = "none";
-    document.getElementById("BookGallery").style.display = "none";
-    document.getElementById("avGallery").style.display = "block";
-    document.getElementById("artGallery").style.display = "none";
-    window.location.hash = "avOnly";
-    initGallery();
+document.getElementById("showAVOnly").addEventListener("click", function(e) {
+    const artPanel = document.getElementById("ArtVisible");
+    if (artPanel && !window.location.pathname.startsWith("/Row2/")) {
+        show("ArtVisible");
+        document.getElementById("uploadArt").style.display = "none";
+        document.getElementById("BookGallery").style.display = "none";
+        document.getElementById("avGallery").style.display = "block";
+        document.getElementById("artGallery").style.display = "none";
+        window.location.hash = "av";
+        initGallery();
+        e.preventDefault();
+    }
 })
 
-document.getElementById("showBooksOnly").addEventListener("click", function() {
-    navigateTo("ArtVisible");
-    document.getElementById("uploadArt").style.display = "none";
-    document.getElementById("BookGallery").style.display = "block";
-    document.getElementById("avGallery").style.display = "none";
-    document.getElementById("artGallery").style.display = "none";
-    window.location.hash = "booksOnly";
-    initGallery();
+document.getElementById("showBooksOnly").addEventListener("click", function(e) {
+    const artPanel = document.getElementById("ArtVisible");
+    if (artPanel && !window.location.pathname.startsWith("/Row2/")) {
+        show("ArtVisible");
+        document.getElementById("uploadArt").style.display = "none";
+        document.getElementById("BookGallery").style.display = "block";
+        document.getElementById("avGallery").style.display = "none";
+        document.getElementById("artGallery").style.display = "none";
+        window.location.hash = "books";
+        initGallery();
+        e.preventDefault();
+    }
 })
 
 document.getElementById("headerHeading").addEventListener("click", function() {
@@ -164,6 +195,7 @@ const map = [
     ["triggerPlanner", "PlannerVisible"],
     ["triggerCalendar", "CalendarVisible"],
     ["triggerSettings", "SettingsVisible"],
+    ["triggerArt", "ArtVisible"],
 ];
 
 function show(id) {

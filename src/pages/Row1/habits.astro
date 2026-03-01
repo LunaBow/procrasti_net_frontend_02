@@ -3,12 +3,12 @@ import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
 import "../../styles/global.css";
-import HabitTracker from "../../components/HabitTracker.astro";
+import Habits from "../../components/Habits.svelte";
 ---
 
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
-    <HabitTracker />
+    <Habits client:load />
     <Footer />
 </div>

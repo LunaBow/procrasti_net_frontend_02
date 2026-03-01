@@ -3,12 +3,12 @@ import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
 import "../../styles/global.css";
-import SettingsPanel from "../../components/SettingsPanel.astro";
+import Settings from "../../components/Settings.svelte";
 ---
 
 <div id="entireContentWrapper">
     <Header />
     <Navigation />
-    <SettingsPanel />
+    <Settings client:load />
     <Footer />
 </div>

@@ -5,7 +5,6 @@ const artType = document.getElementById("artType");
 
 function updateArtFields() {
     if (artType.value === "Drawing") {
-        const fileInput = document.getElementById("artImage");
         document.getElementById("artImage").style.display = "none";
         document.getElementById("customArtImage").style.display = "block";
         document.getElementById("artLink").style.display = "none";
