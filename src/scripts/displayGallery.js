@@ -22,7 +22,7 @@ export async function initGallery() {
         `).join('');
 
         drawingGrid.innerHTML = drawings.map(draw => {
-            // Nutze die baseUrl der API (z.B. https://mt242001-10925.node.ustp.cloud:3000)
+            // Nutze die baseUrl der API
             const baseUrl = api.baseUrl;
 
             // Der Pfad muss zum statischen Ordner im Backend passen

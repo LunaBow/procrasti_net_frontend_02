@@ -42,7 +42,7 @@ class APIClient {
 
     /* ===== AUTH (JWT) ===== */
     async login(username, password) {
-        const data = await this.req("/login", {
+        const data = await this.req("/auth/login", {
             method: "POST",
             body: JSON.stringify({ username, password }),
         });
@@ -52,8 +52,7 @@ class APIClient {
     }
 
     async register(username, password) {
-        // existing API from your friend project
-        return this.req("/user", {
+        return this.req("/auth/register", {
             method: "POST",
             body: JSON.stringify({
                 username,
@@ -71,13 +70,13 @@ class APIClient {
 
     async getCurrentUser() {
         try {
-            return await this.req("/me");
+            return await this.req("/auth/me");
         } catch {
             return null;
         }
     }
 
-    /* ===== OLD CONTENT ENDPOINTS (from friend project) ===== */
+    /* ===== OLD CONTENT (Andrea&Luna) ===== */
     uploadBook(data) {
         return this.req("/book", { method: "POST", body: JSON.stringify(data) });
     }
@@ -135,7 +134,7 @@ class APIClient {
         }
     }
 
-    /* ===== PROCRASTI-NET ENDPOINTS (implement backend later) =====
+    /* ===== PROCRASTI-NET ENDPOINTS =====
        Leave these here so your frontend can start now.
     */
     listSkills(q = "") {
@@ -168,29 +167,29 @@ class APIClient {
     }
 
     checkHabit(id, dateISO) {
-        return this.req("/checkins", {
+        return this.req(`/routines/${id}/complete`, {
             method: "POST",
-            body: JSON.stringify({ routineId: id, date: dateISO }),
+            body: JSON.stringify({ date: dateISO, done: true }),
         });
     }
 
     listPlan(fromISO, toISO) {
-        return this.req(`/plan?from=${encodeURIComponent(fromISO)}&to=${encodeURIComponent(toISO)}`);
+        // Planner will now just use listTodos and handle dates
+        console.warn("listPlan endpoint not implemented in backend. Redirecting to listTodos.");
+        return this.listTodos();
     }
 
     scheduleTodo(todoId, startsAtISO, endsAtISO) {
-        return this.req("/plan", {
-            method: "POST",
-            body: JSON.stringify({ todoId, startsAt: startsAtISO, endsAt: endsAtISO }),
-        });
+        // Just patch the due_date
+        return this.updateTodo(todoId, { due_date: startsAtISO });
     }
 
     getSettings() {
-        return this.req("/settings");
+        return Promise.resolve({ error: "Not implemented in backend" });
     }
 
     updateSettings(data) {
-        return this.req("/settings", { method: "PATCH", body: JSON.stringify(data) });
+        return Promise.resolve({ error: "Not implemented in backend" });
     }
 }
 

@@ -32,12 +32,18 @@ window.addEventListener("DOMContentLoaded", () => {
         "#artworks": "ArtVisible",
         "#drawings": "ArtVisible",
         "#av": "ArtVisible",
-        "#books": "ArtVisible"
+        "#books": "ArtVisible",
+        "#auth": "AuthVisible"
     };
 
     // 1. Prüfen, ob es eine normale Hauptseite ist
     if (simpleRoutes[hash]) {
-        navigateTo(simpleRoutes[hash]);
+        if (hash === "#auth") {
+            navigateTo("JoinContent");
+            show("AuthVisible");
+        } else {
+            navigateTo(simpleRoutes[hash]);
+        }
         if (hash === "#artworks") {
             // Alles zeigen
             ["artGallery", "avGallery", "BookGallery", "uploadArt"].forEach(id => {
@@ -195,6 +201,7 @@ const map = [
     ["triggerPlanner", "PlannerVisible"],
     ["triggerCalendar", "CalendarVisible"],
     ["triggerSettings", "SettingsVisible"],
+    ["triggerAuth", "AuthVisible"],
     ["triggerArt", "ArtVisible"],
 ];
 
