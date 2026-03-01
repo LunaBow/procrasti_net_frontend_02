@@ -9,10 +9,12 @@ class APIClient {
     }
 
     get token() {
+        if (typeof window === "undefined") return null;
         return localStorage.getItem("jwt");
     }
 
     set token(v) {
+        if (typeof window === "undefined") return;
         if (!v) localStorage.removeItem("jwt");
         else localStorage.setItem("jwt", v);
     }
@@ -56,8 +58,9 @@ class APIClient {
         return this.req("/auth/register", {
             method: "POST",
             body: JSON.stringify({
-                username, // Fallback for backend that might use this
+                username, // Fallback
                 display_name: display_name || username,
+                displayName: display_name || username, // CamelCase fallback
                 handle,
                 password,
                 email,
@@ -68,7 +71,9 @@ class APIClient {
 
     logout() {
         this.token = null;
-        window.location.reload();
+        if (typeof window !== "undefined") {
+            window.location.reload();
+        }
     }
 
     get isDevMode() {
@@ -80,6 +85,7 @@ class APIClient {
         if (this.isDevMode) {
             return { username: "DevUser", profileDescription: "Developer", devMode: true };
         }
+        if (!this.token) return null;
         try {
             return await this.req("/auth/me");
         } catch {

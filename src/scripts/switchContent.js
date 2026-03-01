@@ -21,6 +21,9 @@ function navigateTo(sectionId) {
     if (target) target.style.display = "block";
 }
 
+import { initGallery } from "./displayGallery.js";
+import { displayMembers } from "./showAllMembers.js";
+
 window.addEventListener("DOMContentLoaded", () => {
     const hash = window.location.hash;
 

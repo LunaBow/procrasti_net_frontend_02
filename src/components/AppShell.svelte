@@ -66,7 +66,7 @@
         display: flex;
         gap: 0.5rem;
         margin-bottom: 2rem;
-        border-bottom: 2px solid #e2e8f0;
+        border-bottom: 2px solid var(--border);
         padding-bottom: 0.5rem;
         overflow-x: auto;
     }
@@ -77,16 +77,16 @@
         border-radius: 6px 6px 0 0;
         cursor: pointer;
         font-weight: 600;
-        color: #64748b;
+        color: var(--text-muted);
         white-space: nowrap;
         transition: all 0.2s;
     }
     .tab-nav button:hover {
-        background: #f1f5f9;
-        color: #334155;
+        background: var(--surface-alt);
+        color: var(--text);
     }
     .tab-nav button.active {
-        color: #3b82f6;
+        color: var(--primary);
         position: relative;
     }
     .tab-nav button.active::after {
@@ -96,7 +96,7 @@
         left: 0;
         right: 0;
         height: 2px;
-        background: #3b82f6;
+        background: var(--primary);
     }
     .tab-content {
         animation: fadeIn 0.3s ease-out;

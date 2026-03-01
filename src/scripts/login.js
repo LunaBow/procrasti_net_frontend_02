@@ -28,13 +28,14 @@ async function updateAuthUI() {
     try {
         const user = await api.getCurrentUser();
 
-        if (user?.username) {
+        if (user) {
+            const name = user.display_name || user.username || user.handle || "Still alive";
             if (loginForm) loginForm.style.display = "none";
             if (registerBar) registerBar.style.display = "none";
 
             // Clear and rebuild status safely
             status.replaceChildren();
-            status.appendChild(document.createTextNode(`Welcome, ${user.username}. Still alive. `));
+            status.appendChild(document.createTextNode(`Welcome, ${name}. `));
 
             const logoutBtn = ensureLogoutButton();
             if (logoutBtn) {

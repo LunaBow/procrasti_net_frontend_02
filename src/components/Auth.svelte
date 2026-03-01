@@ -59,7 +59,7 @@
         <p>Checking authentication...</p>
     {:else if user}
         <div class="user-info">
-            <p>Logged in as <strong>{user.username}</strong></p>
+            <p>Logged in as <strong>{user.display_name || user.username || user.handle || "Anonymous"}</strong></p>
             <button on:click={logout} class="btn-logout">Log out</button>
         </div>
     {:else}

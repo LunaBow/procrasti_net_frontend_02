@@ -1,6 +1,6 @@
 import { api } from "./API-Client.js";
 
-async function displayMembers() {
+export async function displayMembers() {
     const userList = document.getElementById('user-list');
     if(!userList) return;
 
@@ -19,7 +19,8 @@ async function displayMembers() {
             const li = document.createElement("li");
             li.className = "member-item";
 
-            li.innerHTML = `<strong>${user.username}</strong>`;
+            const name = user.display_name || user.username || user.handle || "Anonymous";
+            li.innerHTML = `<strong>${name}</strong>`;
 
             userList.appendChild(li);
         });
