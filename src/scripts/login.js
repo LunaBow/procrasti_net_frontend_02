@@ -1,8 +1,7 @@
-import { api } from '../../lib/api.ts';
+import { api } from "../../lib/api.ts";
 
 const loginForm = document.getElementById("login-form");
 const status = document.getElementById("login-status");
-const registerBar = document.getElementById("register-bar");
 
 function setStatusText(text) {
     if (!status) return;
@@ -17,50 +16,26 @@ function ensureLogoutButton() {
         btn = document.createElement("button");
         btn.className = "logout-btn";
         btn.type = "button";
-        btn.textContent = "Log out";
-        status.appendChild(document.createTextNode(" "));
+        btn.textContent = "Logout";
+        btn.addEventListener("click", () => {
+            api.logout();
+            setStatusText("Not logged in");
+            window.location.reload();
+        });
         status.appendChild(btn);
     }
     return btn;
 }
 
 async function updateAuthUI() {
-    try {
-        const user = await api.getCurrentUser();
+    if (!status) return;
 
-        if (user) {
-            const name = user.display_name || user.username || user.handle || "Still alive";
-            if (loginForm) loginForm.style.display = "none";
-            if (registerBar) registerBar.style.display = "none";
-
-            // Clear and rebuild status safely
-            status.replaceChildren();
-            status.appendChild(document.createTextNode(`Welcome, ${name}. `));
-
-            const logoutBtn = ensureLogoutButton();
-            if (logoutBtn) {
-                logoutBtn.onclick = async () => {
-                    try {
-                        await api.logout();
-                        setStatusText("Logged out. Go touch grass. Or don’t. 🌱");
-                        if (loginForm) loginForm.style.display = "block";
-                        if (registerBar) registerBar.style.display = "block";
-                    } catch (err) {
-                        console.error("Logout failed:", err);
-                        setStatusText("Logout failed. The system is clingy.");
-                    }
-                };
-            }
-        } else {
-            setStatusText("No member logged in (yet).");
-            if (loginForm) loginForm.style.display = "block";
-            if (registerBar) registerBar.style.display = "block";
-        }
-    } catch (error) {
-        console.error("Auth check failed:", error);
-        setStatusText("Auth check failed. Reality is unstable.");
-        if (loginForm) loginForm.style.display = "block";
-        if (registerBar) registerBar.style.display = "block";
+    const user = await api.getCurrentUser();
+    if (user) {
+        setStatusText(`Logged in as ${user.display_name || user.email || "User"}`);
+        ensureLogoutButton();
+    } else {
+        setStatusText("Not logged in");
     }
 }
 
@@ -72,20 +47,20 @@ if (loginForm) {
         const passwordEl = document.getElementById("password");
 
         if (!usernameEl || !passwordEl) {
-            console.error("Input fields not found!");
-            setStatusText("Login UI broke. Someone angered the DOM gods.");
+            setStatusText("Login UI broke.");
             return;
         }
 
         try {
             setStatusText("Logging in…");
-            await api.login(usernameEl.value.trim(), passwordEl.value);
-            setStatusText("Login successful.");
+            await api.login({ email: usernameEl.value.trim(), password: passwordEl.value });
+            setStatusText("Login successful ✅");
             await updateAuthUI();
             loginForm.reset();
+            window.location.reload();
         } catch (error) {
             console.error("Login failed:", error);
-            setStatusText("Login failed. Skill issue.");
+            setStatusText("Login failed.");
         }
     });
 }

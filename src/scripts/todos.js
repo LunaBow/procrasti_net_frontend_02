@@ -18,8 +18,20 @@ function row(t) {
 }
 
 async function refresh() {
-    const todos = await api.listTodos();
-    list.innerHTML = todos.map(row).join("");
+    async function refresh() {
+        if (!api.token) {
+            list.innerHTML = `<li class="empty">Log in to see your todos.</li>`;
+            return;
+        }
+        try {
+            const todos = await api.listTodos();
+            list.innerHTML = todos.map(row).join("");
+        } catch (e) {
+            console.error(e);
+            list.innerHTML = `<li class="empty">Failed to load todos.</li>`;
+        }
+    }
+    await refresh();
 }
 
 form?.addEventListener("submit", async (e) => {
