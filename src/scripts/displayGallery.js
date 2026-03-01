@@ -8,6 +8,7 @@ export async function initGallery() {
         // Alles gleichzeitig laden für bessere Performance
         const [books, drawings, avs] = await Promise.all([
             api.getBooks(),
+            api.getBooks = async () => [],
             api.getArtworks(),
             api.getAVs()
         ]);

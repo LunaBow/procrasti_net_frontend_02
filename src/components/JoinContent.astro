@@ -9,15 +9,15 @@ import "../styles/global.css";
 
 ---
 
-  <section class="content">
+  <div id="JoinContent"><section class="content">
     <div id="SkillsVisible" style="display:block"><Skills client:load /></div>
     <div id="TodosVisible" style="display:none"><Todos client:load /></div>
     <div id="HabitsVisible" style="display:none"><Habits client:load /></div>
     <div id="PlannerVisible" style="display:none"><Planner client:load /></div>
     <div id="CalendarVisible" style="display:none"><Calendar client:load /></div>
     <div id="SettingsVisible" style="display:none"><Settings client:load /></div>
-    <div id="AuthVisible" style="display:none"><Auth client:load /></div>
   </section>
+  </div>
 
   <script>
     import "../scripts/switchContent.js";

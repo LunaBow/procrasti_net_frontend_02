@@ -1,107 +1,110 @@
-<script>
-    import { onMount } from 'svelte';
-    import { api } from '../../lib/api.ts';
-    import Auth from './Auth.svelte';
-    let todos = [];
-    let newTodoTitle = "";
-    let newTodoPriority = "medium";
-    let loading = true;
-    let user = null;
+<script lang="ts">
+    import { onMount } from "svelte";
+    import { api } from "../../lib/api";
 
-    async function loadTodos() {
+    type Todo = {
+        id?: number;
+        title?: string;
+        text?: string;
+        done?: boolean;
+        completed?: boolean;
+        created_at?: string;
+    };
+
+    let todos: Todo[] = [];
+    let loading = true;
+    let error = "";
+    let needsLogin = false;
+
+    function isUnauthorized(msg: string) {
+        const m = (msg || "").toLowerCase();
+        return m.includes("unauthorized") || m.includes("401") || m.includes("no token");
+    }
+
+    async function refresh() {
         loading = true;
+        error = "";
+        needsLogin = false;
+
+        // If there's no token, don't even try
+        if (!api.token) {
+            needsLogin = true;
+            loading = false;
+            return;
+        }
+
         try {
-            user = await api.getCurrentUser();
-            if (user) {
-                todos = await api.listTodos();
+            const data = await api.listTodos();
+            todos = Array.isArray(data) ? data : [];
+        } catch (e: any) {
+            const msg = e?.message ?? "Failed to load todos";
+            if (isUnauthorized(msg)) {
+                needsLogin = true;
+                todos = [];
+            } else {
+                error = msg;
             }
-        } catch (e) {
-            console.error("Failed to load todos:", e);
         } finally {
             loading = false;
         }
     }
 
-    async function addTodo() {
-        if (!newTodoTitle.trim()) return;
-        try {
-            await api.createTodo({ 
-                title: newTodoTitle.trim(), 
-                priority: newTodoPriority,
-                status: "open"
-            });
-            newTodoTitle = "";
-            await loadTodos();
-        } catch (e) {
-            console.error("Failed to add todo:", e);
-        }
-    }
+    onMount(() => {
+        refresh();
+    });
 
-    async function toggleTodo(todo) {
-        try {
-            const newStatus = todo.status === "completed" ? "open" : "completed";
-            await api.updateTodo(todo.id, { 
-                title: todo.title,
-                status: newStatus 
-            });
-            await loadTodos();
-        } catch (e) {
-            console.error("Failed to update todo:", e);
-        }
-    }
-
-    async function deleteTodo(id) {
-        try {
-            await api.deleteTodo(id);
-            await loadTodos();
-        } catch (e) {
-            console.error("Failed to delete todo:", e);
-        }
-    }
-
-    onMount(loadTodos);
+    // Optional: normalize fields if backend uses different names
+    $: normalizedTodos = todos.map((t) => ({
+        ...t,
+        title: t.title ?? t.text ?? "(untitled)",
+        done: t.done ?? t.completed ?? false
+    }));
 </script>
 
 <section class="panel">
-    <h2>Todo List</h2>
-    
-    <form on:submit|preventDefault={addTodo} class="add-form">
-        <input 
-            type="text" 
-            placeholder="What needs to be done?" 
-            bind:value={newTodoTitle}
-        />
-        <select bind:value={newTodoPriority}>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-        </select>
-        <button type="submit">Add</button>
-    </form>
+    <h2>To-dos</h2>
+
+    <div class="controls">
+        <button type="button" on:click={refresh} disabled={loading}>
+            {loading ? "Loading..." : "Refresh"}
+        </button>
+    </div>
 
     {#if loading}
-        <p>Loading todos...</p>
-    {:else if !user}
-        <div class="auth-wrapper">
-            <p>Please log in to use this feature.</p>
-            <Auth />
+        <p>Loading to-dos...</p>
+
+    {:else if needsLogin}
+        <div class="notice">
+            <p><strong>Login required.</strong> Your backend protects <code>/todos</code>.</p>
+            <p>
+                Go to your Auth page, log in, then come back and hit Refresh.
+            </p>
         </div>
+
+    {:else if error}
+        <p class="error">{error}</p>
+
     {:else}
-        <div class="todo-list">
-            {#each todos as todo}
-                <div class="todo-item" class:done={todo.status === "completed"}>
-                    <input 
-                        type="checkbox" 
-                        checked={todo.status === "completed"} 
-                        on:change={() => toggleTodo(todo)}
-                    />
+        <ul class="todoList">
+            {#each normalizedTodos as todo (todo.id ?? todo.title)}
+                <li class:done={todo.done}>
                     <span class="title">{todo.title}</span>
-                    <span class="priority-tag {todo.priority}">{todo.priority}</span>
-                    <button class="delete-btn" on:click={() => deleteTodo(todo.id)}>✕</button>
-                </div>
+                    <span class="status">{todo.done ? "✓" : ""}</span>
+                </li>
             {:else}
-                <p class="empty">Nothing to do! Enjoy your time.</p>
+                <li class="empty">No to-dos yet.</li>
             {/each}
-        </div>
+        </ul>
     {/if}
 </section>
+
+<style>
+    .controls { margin: 0.5rem 0 1rem; display: flex; gap: 0.5rem; }
+    .error { margin: 0; }
+    .notice { padding: 0.75rem; border-radius: 12px; background: rgba(0,0,0,0.04); }
+    .todoList { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+    .todoList li { padding: 0.75rem; border-radius: 12px; background: rgba(0,0,0,0.03); display: flex; justify-content: space-between; align-items: center; }
+    .todoList li.done { opacity: 0.7; text-decoration: line-through; }
+    .empty { opacity: 0.75; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+</style>

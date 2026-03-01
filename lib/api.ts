@@ -12,30 +12,45 @@ export interface RegisterParams {
 
 export interface AuthResponse {
     token: string;
+    user?: any;
 }
 
-export interface BaseResponse {
-    message: string;
-}
+export type TodoStatus = "open" | "completed";
+export type TodoPriority = "low" | "medium" | "high";
 
-export interface Category {
-    id: string;
-    name: string;
-    description: string;
-}
-
-export interface Prompt {
-    category_id: number;
-    name: string;
+export interface TodoInput {
     title: string;
-    description: string;
+    notes?: string;
+    due_date?: string; // YYYY-MM-DD or ISO
+    status?: TodoStatus;
+    priority?: TodoPriority;
+}
+
+export interface RoutineInput {
+    title: string;
+    schedule_type?: "daily" | "weekly";
+    weekdays?: string[];
+    reminder_time?: string; // HH:MM:SS
+}
+
+export interface RoutineCompleteInput {
+    date: string; // YYYY-MM-DD
+    done: boolean;
+    note?: string;
+}
+
+export interface CheckinInput {
+    date: string; // YYYY-MM-DD
+    mood: number; // 1..10
+    energy: number; // 1..10
+    note?: string;
 }
 
 export class ApiClient {
     private baseUrl: string;
 
     constructor(baseUrl: string) {
-        this.baseUrl = baseUrl;
+        this.baseUrl = baseUrl.replace(/\/$/, "");
     }
 
     get token(): string | null {
@@ -50,68 +65,62 @@ export class ApiClient {
     }
 
     private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-        const headers = {
-            'Content-Type': 'application/json',
-            ...(this.token ? { 'Authorization': `Bearer ${this.token}` } : {}),
-            ...options.headers,
+        const headers: Record<string, string> = {
+            "Content-Type": "application/json",
+            ...(options.headers as Record<string, string> | undefined),
         };
 
-        const response = await fetch(`${this.baseUrl}${endpoint}`, {
-            ...options,
-            headers,
-        });
+        if (this.token) headers.Authorization = `Bearer ${this.token}`;
 
-        if (response.status === 401) {
-            this.token = null;
+        const res = await fetch(`${this.baseUrl}${endpoint}`, { ...options, headers });
+
+        const text = await res.text();
+        let data: any = null;
+        try {
+            data = text ? JSON.parse(text) : null;
+        } catch {
+            data = { message: text || "Invalid JSON response" };
         }
 
-        const text = await response.text();
-        const data = text ? JSON.parse(text) : {};
+        if (res.status === 401) this.token = null;
 
-        if (!response.ok) {
-            throw new Error(data.message || 'Ein Fehler ist aufgetreten');
+        if (!res.ok) {
+            throw new Error(data?.error || data?.message || `Request failed (${res.status})`);
         }
 
         return data as T;
     }
 
+    // AUTH
     async login(credentials: LoginParams): Promise<AuthResponse> {
-        const data = await this.request<AuthResponse>('/auth/login', {
-            method: 'POST',
+        const data = await this.request<AuthResponse>("/auth/login", {
+            method: "POST",
             body: JSON.stringify(credentials),
         });
-
-        if (data?.token) {
-            this.token = data.token;
-        }
-
+        if (data?.token) this.token = data.token;
         return data;
     }
 
-    async register(credentials: RegisterParams): Promise<any> {
+    async register(credentials: RegisterParams): Promise<AuthResponse> {
         const payload = {
             ...credentials,
-            display_name: credentials.display_name || credentials.email.split('@')[0],
-            handle: credentials.handle || credentials.email.split('@')[0]
+            display_name: credentials.display_name || credentials.email.split("@")[0] || "User",
+            handle: credentials.handle || credentials.email.split("@")[0] || "user",
         };
-        const data = await this.request<any>('/auth/register', {
-            method: 'POST',
+
+        const data = await this.request<AuthResponse>("/auth/register", {
+            method: "POST",
             body: JSON.stringify(payload),
         });
 
-        if (data?.token) {
-            this.token = data.token;
-        }
-
+        if (data?.token) this.token = data.token;
         return data;
     }
 
-    async getCurrentUser(): Promise<any> {
+    async getCurrentUser(): Promise<any | null> {
         if (!this.token) return null;
         try {
-            return await this.request<any>('/auth/me', {
-                method: 'GET',
-            });
+            return await this.request<any>("/auth/me", { method: "GET" });
         } catch {
             return null;
         }
@@ -121,39 +130,72 @@ export class ApiClient {
         this.token = null;
     }
 
-    async getCategories(): Promise<Category[]> {
-        return this.request<Category[]>('/categories', {
-            method: 'GET',
+    // SKILLS
+    async listSkills(): Promise<any[]> {
+        return this.request<any[]>("/skills", { method: "GET" });
+    }
+
+    // TODOS
+    async listTodos(status?: TodoStatus): Promise<any[]> {
+        const qs = status ? `?status=${encodeURIComponent(status)}` : "";
+        return this.request<any[]>(`/todos${qs}`, { method: "GET" });
+    }
+
+    async createTodo(input: TodoInput): Promise<any> {
+        return this.request<any>("/todos", {
+            method: "POST",
+            body: JSON.stringify(input),
         });
     }
 
-    async getCategoryById(categoryid: string | number): Promise<Category> {
-        const id = encodeURIComponent(String(categoryid));
-        return this.request<Category>(`/categories/${id}`, {
-            method: 'GET',
+    async updateTodo(id: number | string, input: TodoInput): Promise<any> {
+        return this.request<any>(`/todos/${encodeURIComponent(String(id))}`, {
+            method: "PUT",
+            body: JSON.stringify(input),
         });
     }
 
-    async createPrompt(promptData: Prompt): Promise<BaseResponse> {
-        return this.request<BaseResponse>('/prompts', {
-            method: 'POST',
-            body: JSON.stringify(promptData),
+    async deleteTodo(id: number | string): Promise<any> {
+        return this.request<any>(`/todos/${encodeURIComponent(String(id))}`, {
+            method: "DELETE",
         });
     }
 
-    async getPrompts(): Promise<Prompt[]> {
-        return this.request<Prompt[]>('/prompts', {
-            method: 'GET',
+    // ROUTINES (Habits)
+    async listRoutines(): Promise<any[]> {
+        return this.request<any[]>("/routines", { method: "GET" });
+    }
+
+    async createRoutine(input: RoutineInput): Promise<any> {
+        return this.request<any>("/routines", {
+            method: "POST",
+            body: JSON.stringify({ schedule_type: "daily", ...input }),
         });
     }
 
-    async getPromptById(promptid: string | number): Promise<Prompt> {
-        const id = encodeURIComponent(String(promptid));
-        return this.request<Prompt>(`/prompts/${id}`, {
-            method: 'GET',
+    async completeRoutine(id: number | string, input: RoutineCompleteInput): Promise<any> {
+        return this.request<any>(`/routines/${encodeURIComponent(String(id))}/complete`, {
+            method: "POST",
+            body: JSON.stringify(input),
+        });
+    }
+
+    // CHECKINS
+    async listCheckins(from?: string, to?: string): Promise<any[]> {
+        const p = new URLSearchParams();
+        if (from) p.set("from", from);
+        if (to) p.set("to", to);
+        const qs = p.toString() ? `?${p.toString()}` : "";
+        return this.request<any[]>(`/checkins${qs}`, { method: "GET" });
+    }
+
+    async createCheckin(input: CheckinInput): Promise<any> {
+        return this.request<any>("/checkins", {
+            method: "POST",
+            body: JSON.stringify(input),
         });
     }
 }
-//TODO: change after deploying
+
 const API_BASE = (import.meta.env.PUBLIC_API_URL || "https://mt231043-10992.node.ustp.cloud/api").replace(/\/$/, "");
 export const api = new ApiClient(API_BASE);

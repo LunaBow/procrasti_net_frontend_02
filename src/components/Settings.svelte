@@ -1,10 +1,10 @@
-<script>
-    import { onMount } from 'svelte';
-    import { api } from '../../lib/api.ts';
-    import Auth from './Auth.svelte';
+<script lang="ts">
+    import { onMount } from "svelte";
+    import { api } from "../../lib/api";
+    import Auth from "./Auth.svelte";
 
     let loading = true;
-    let user = null;
+    let user: any = null;
     let devMode = false;
 
     async function checkUser() {

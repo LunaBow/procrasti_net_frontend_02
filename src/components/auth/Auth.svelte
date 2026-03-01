@@ -47,7 +47,7 @@
                         {isLogin ? "Gib deine E-Mail ein, um dich einzuloggen." : "Erstelle ein Konto, um loszulegen."}
                     </p>
                 </div>
-                <button 
+                <button
                     class="text-sm text-blue-600 hover:text-blue-800 font-semibold"
                     on:click={() => { isLogin = !isLogin; error = ""; }}
                 >
