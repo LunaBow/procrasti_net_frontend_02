@@ -14,43 +14,7 @@
     </div>
 </header>
 
-
-<div class="auth-area">
-        <details class="auth-drop" id="login-bar">
-            <summary>
-                <div class="auth-summary">
-                    <span id="login-status" class="auth-status">Not logged in</span>
-                    <span class="auth-hint">Log in</span>
-                </div>
-            </summary>
-            <form id="login-form" class="auth-form" method="POST" action="#">
-                <input type="email" id="username" name="username" placeholder="Email" aria-label="Email" required />
-                <input type="password" id="password" name="password" placeholder="Password" aria-label="Password" required />
-                <button type="submit" class="auth-btn">Log in</button>
-            </form>
-        </details>
-
-        <details class="auth-drop" id="register-bar">
-            <summary>
-                <div class="auth-summary">
-                    <span class="auth-status">New here?</span>
-                    <span class="auth-hint">Sign up</span>
-                </div>
-            </summary>
-            <form id="register-form" class="auth-form" method="POST" action="#">
-                <input type="email" id="emailReg" name="emailReg" placeholder="Email" aria-label="Email" required />
-                <input type="text" id="usernameReg" name="usernameReg" placeholder="Username (handle)" aria-label="Username" required />
-                <input type="text" id="display_nameReg" name="display_nameReg" placeholder="Display Name" aria-label="Display Name" required />
-                <input type="password" id="passwordReg" name="passwordReg" placeholder="Password" aria-label="Password" required />
-                <button type="submit" class="auth-btn">Sign up</button>
-            </form>
-        </details>
-    </div>
-
-
 <script>
     import "../scripts/switchTheme.js";
-    import "../scripts/register.js";
-    import "../scripts/login.js";
     import "../scripts/switchContent.js";
 </script>
