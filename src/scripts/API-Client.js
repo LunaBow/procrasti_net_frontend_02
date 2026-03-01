@@ -27,17 +27,23 @@ class APIClient {
     }
 
     async req(path, { method = "GET", body, isFormData = false } = {}) {
-        if (!this.token && method !== "GET" && !path.startsWith("/auth/")) {
+        const publicPaths = ["/skills", "/user", "/book", "/artwork", "/av"];
+        const basePath = path.split("?")[0];
+        const isPublic = publicPaths.some(p => basePath === p || basePath.startsWith(p + "/"));
+        const isAuth = basePath.startsWith("/auth/");
+
+        if (!this.token && !isAuth && !isPublic) {
             throw new Error(`Unauthorized: No token for ${method} ${path}`);
         }
+
         const res = await fetch(`${this.baseUrl}${path}`, {
             method,
             headers: this.headers({ isFormData }),
             body,
         });
 
-        if (res.status === 401 && !path.startsWith("/auth/")) {
-            // Token might be invalid/expired
+        if (res.status === 401) {
+            // Token is invalid/expired
             this.token = null;
         }
 
@@ -52,27 +58,23 @@ class APIClient {
     }
 
     /* ===== AUTH (JWT) ===== */
-    async login(username, password) {
+    async login(email, password) {
         const data = await this.req("/auth/login", {
             method: "POST",
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ email, password }),
         });
 
         if (data?.token) this.token = data.token;
         return data;
     }
 
-    async register({ username, password, email, display_name, handle }) {
+    async register({ email, password, display_name }) {
         return this.req("/auth/register", {
             method: "POST",
             body: JSON.stringify({
-                username, // Fallback
-                display_name: display_name || username,
-                displayName: display_name || username, // CamelCase fallback
-                handle,
-                password,
                 email,
-                profileDescription: "member",
+                password,
+                display_name: display_name || email.split("@")[0],
             }),
         });
     }

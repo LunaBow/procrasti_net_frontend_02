@@ -28,15 +28,13 @@
             if (isRegister) {
                 await api.register({
                     email,
-                    handle: username,
-                    display_name: displayName || username,
-                    username,
+                    display_name: displayName || email.split("@")[0],
                     password
                 });
                 // After register, attempt login
-                await api.login(username, password);
+                await api.login(email, password);
             } else {
-                await api.login(username, password);
+                await api.login(email, password);
             }
             await checkUser();
             // Dispatch success or reload
@@ -75,17 +73,13 @@
             <form on:submit|preventDefault={handleAuth}>
                 {#if isRegister}
                     <div class="field">
-                        <label for="auth-email">Email Address</label>
-                        <input id="auth-email" type="email" bind:value={email} required placeholder="Enter email" />
-                    </div>
-                    <div class="field">
                         <label for="auth-displayname">Display Name</label>
                         <input id="auth-displayname" type="text" bind:value={displayName} required placeholder="Enter display name" />
                     </div>
                 {/if}
                 <div class="field">
-                    <label for="auth-username">Username</label>
-                    <input id="auth-username" type="text" bind:value={username} required placeholder="Enter username" />
+                    <label for="auth-email">Email Address</label>
+                    <input id="auth-email" type="email" bind:value={email} required placeholder="Enter email" />
                 </div>
                 <div class="field">
                     <label for="auth-password">Password</label>

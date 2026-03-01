@@ -9,7 +9,7 @@ function row(t) {
     return `
   <div class="item" data-id="${t.id}">
     <label class="check">
-      <input type="checkbox" ${t.done ? "checked" : ""} />
+      <input type="checkbox" ${t.status === "completed" ? "checked" : ""} />
       <span>${t.title}</span>
     </label>
     <span class="tag">${t.priority || "med"}</span>
@@ -35,7 +35,11 @@ list?.addEventListener("click", async (e) => {
     const id = item.dataset.id;
 
     if (e.target.matches('input[type="checkbox"]')) {
-        await api.updateTodo(id, { done: e.target.checked });
+        const title = item.querySelector('span').innerText;
+        await api.updateTodo(id, { 
+            title, 
+            status: e.target.checked ? "completed" : "open" 
+        });
         return;
     }
 

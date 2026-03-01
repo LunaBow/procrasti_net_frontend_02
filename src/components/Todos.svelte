@@ -29,7 +29,7 @@
             await api.createTodo({ 
                 title: newTodoTitle.trim(), 
                 priority: newTodoPriority,
-                status: "pending"
+                status: "open"
             });
             newTodoTitle = "";
             await loadTodos();
@@ -40,8 +40,11 @@
 
     async function toggleTodo(todo) {
         try {
-            const newStatus = todo.status === "completed" ? "pending" : "completed";
-            await api.updateTodo(todo.id, { status: newStatus });
+            const newStatus = todo.status === "completed" ? "open" : "completed";
+            await api.updateTodo(todo.id, { 
+                title: todo.title,
+                status: newStatus 
+            });
             await loadTodos();
         } catch (e) {
             console.error("Failed to update todo:", e);
