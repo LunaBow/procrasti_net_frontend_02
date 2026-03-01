@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { api } from "../../lib/api";
-    import Auth from "./Auth.svelte";
 
     let fromDate = new Date().toISOString().slice(0, 10);
     let toDate = new Date().toISOString().slice(0, 10);
