@@ -71,7 +71,7 @@
     {#if !user && !loading}
         <div class="auth-wrapper">
             <p>Please log in to use this feature.</p>
-            <Auth />
+
         </div>
     {:else}
         <div class="export-box">

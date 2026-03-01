@@ -611,3 +611,6 @@ button, .btn {
 input, select {
   font-family: inherit;
 }
+astro-island[name="Auth"] {
+    display: none !important;
+}
