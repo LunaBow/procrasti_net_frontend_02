@@ -1,102 +1,141 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { api } from "../../lib/api";
 
-    let isLogin = true;
+    let habits: any[] = [];
+    let loading = true;
     let error = "";
-    let ok = "";
-    let formData = {
-        email: "",
-        password: "",
-        display_name: "",
-    };
+    let name = "";
+    let user: any = null;
 
-    async function handleSubmit() {
+    async function loadData() {
+        loading = true;
         error = "";
-        ok = "";
         try {
-            if (isLogin) {
-                await api.login({ email: formData.email.trim(), password: formData.password });
-                ok = "Logged in ✅";
-                // optional: refresh page so components load data
-                window.location.reload();
-            } else {
-                await api.register({
-                    email: formData.email.trim(),
-                    password: formData.password,
-                    display_name: formData.display_name.trim() || formData.email.split("@")[0],
-                    handle: formData.email.split("@")[0],
-                });
-                isLogin = true;
-                ok = "Registered ✅ Now log in.";
-                formData.password = "";
+            user = await api.getCurrentUser();
+            if (user) {
+                habits = await api.listHabits();
             }
-        } catch (err: any) {
-            error = err?.message || "Operation failed";
+        } catch (e: any) {
+            error = e?.message ?? "Failed to load habits";
+            user = null;
+        } finally {
+            loading = false;
         }
     }
 
-    function logout() {
-        api.logout();
-        window.location.reload();
+    async function handleCreate(e: Event) {
+        e.preventDefault();
+        if (!name.trim()) return;
+        try {
+            await api.createHabit({ name: name.trim() });
+            name = "";
+            await loadData();
+        } catch (e: any) {
+            error = e?.message ?? "Failed to create habit";
+        }
     }
+
+    async function handleCheck(id: string | number) {
+        try {
+            const today = new Date().toISOString().slice(0, 10);
+            await api.checkHabit(id, today);
+            await loadData();
+        } catch (e: any) {
+            error = e?.message ?? "Failed to check habit";
+        }
+    }
+
+    onMount(loadData);
 </script>
 
-<div class="authBox">
-    <div class="top">
-        <div>
-            <h3>{isLogin ? "Login" : "Register"}</h3>
-            <p class="muted">{isLogin ? "Use your email + password." : "Create an account."}</p>
+<section class="panel">
+    <h2>Habit Tracker</h2>
+
+    {#if !user && !loading}
+        <div class="auth-wrapper">
+            <p>Please log in to track your habits.</p>
         </div>
+    {:else}
+        <form on:submit={handleCreate} class="create-form">
+            <input type="text" bind:value={name} placeholder="New habit name..." required />
+            <button type="submit">Add Habit</button>
+        </form>
 
-        <button class="link" on:click={() => { isLogin = !isLogin; error=""; ok=""; }}>
-            {isLogin ? "New here?" : "Already have one?"}
-        </button>
-    </div>
-
-    {#if api.token}
-        <button class="ghost" type="button" on:click={logout}>Logout</button>
-    {/if}
-
-    {#if error}
-        <div class="msg error">{error}</div>
-    {/if}
-    {#if ok}
-        <div class="msg ok">{ok}</div>
-    {/if}
-
-    <form on:submit|preventDefault={handleSubmit} class="form">
-        <label>
-            Email
-            <input type="email" required bind:value={formData.email} placeholder="name@example.com" />
-        </label>
-
-        {#if !isLogin}
-            <label>
-                Display name
-                <input type="text" required bind:value={formData.display_name} placeholder="Luna etc." />
-            </label>
+        {#if loading}
+            <p>Loading...</p>
+        {:else if error}
+            <p class="error">{error}</p>
         {/if}
 
-        <label>
-            Password
-            <input type="password" required bind:value={formData.password} placeholder="••••••••" />
-        </label>
-
-        <button type="submit">{isLogin ? "Login" : "Register"}</button>
-    </form>
-</div>
+        <div class="grid">
+            {#each habits as h (h.id)}
+                <article class="card">
+                    <h3>{h.name}</h3>
+                    <p class="streak">Streak: <strong>{h.streak ?? 0}</strong></p>
+                    <button type="button" class="check-btn" on:click={() => handleCheck(h.id)}>
+                        Mark Done Today
+                    </button>
+                </article>
+            {:else}
+                {#if !loading}
+                    <p>No habits yet. Start one above!</p>
+                {/if}
+            {/each}
+        </div>
+    {/if}
+</section>
 
 <style>
-    .authBox { background: var(--surface, #fff); border: 1px solid var(--border, #ddd); border-radius: 16px; padding: 16px; }
-    .top { display:flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-    .muted { margin: 4px 0 0; opacity: 0.7; font-size: 0.9rem; }
-    .link { border:0; background:transparent; cursor:pointer; color: var(--primary, #2563eb); font-weight: 800; }
-    .ghost { margin-top: 10px; border: 1px solid var(--border, #ddd); background: transparent; border-radius: 999px; padding: 6px 10px; cursor:pointer; }
-    .form { margin-top: 12px; display:grid; gap: 10px; }
-    label { display:grid; gap: 6px; font-weight: 700; }
-    input { padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border, #ddd); background: var(--surface-alt, #f7f7f7); }
-    button[type="submit"] { padding: 10px 12px; border-radius: 12px; border:0; background: var(--primary, #2563eb); color:#fff; font-weight: 900; cursor:pointer; }
-    .msg { padding: 10px 12px; border-radius: 12px; font-weight: 800; }
-    .error { background: rgba(220, 38, 38, 0.08); color: #b91c1c; border: 1px solid rgba(220, 38, 38, 0.2); }
-    .ok { background: rgba(34, 197, 94, 0.08); color: #166534; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .create-form {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+    }
+    .create-form input {
+        flex: 1;
+        padding: 0.75rem;
+        border-radius: 12px;
+        border: 1px solid var(--border, #ddd);
+    }
+    .create-form button {
+        padding: 0.75rem 1.5rem;
+        border-radius: 12px;
+        border: 0;
+        background: var(--primary, #2563eb);
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+    .card {
+        padding: 1.25rem;
+        background: var(--surface-alt, #f9f9f9);
+        border-radius: 16px;
+        border: 1px solid var(--border, #eee);
+    }
+    .streak {
+        margin: 0.5rem 0 1rem;
+        font-size: 0.9rem;
+        color: var(--text-muted, #666);
+    }
+    .check-btn {
+        width: 100%;
+        padding: 0.6rem;
+        border-radius: 999px;
+        border: 1px solid var(--primary, #2563eb);
+        background: transparent;
+        color: var(--primary, #2563eb);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .check-btn:hover {
+        background: var(--primary, #2563eb);
+        color: white;
+    }
 </style>
