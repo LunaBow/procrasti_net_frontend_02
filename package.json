@@ -5,13 +5,14 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "start": "node ./dist/server/entry.mjs",
+    "prestart": "node -e \"if (!require('fs').existsSync('dist/server/entry.mjs')) { console.log('Build missing. Running npm run build...'); require('child_process').execSync('npm run build', {stdio: 'inherit'}); }\"",
+    "start": "node dist/server/entry.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
     "lint": "eslint --ext .js,.ts,.astro src",
     "format": "prettier --write '**/*.{js,ts,astro}'",
-    "prepare": "husky install",
+    "prepare": "husky install || true",
     "precommit": "lint-staged"
   },
   "dependencies": {
