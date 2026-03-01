@@ -32,6 +32,7 @@ const authenticateToken = (req: any, res: any, next: any) => {
 router.post('/auth/register', authController.register);
 router.post('/auth/login', authController.login);
 router.get('/auth/me', authenticateToken, authController.getCurrentUser);
+router.get('/user', authController.getAllUsers);
 
 // Skills routes
 router.get('/skills', skillController.getAll);

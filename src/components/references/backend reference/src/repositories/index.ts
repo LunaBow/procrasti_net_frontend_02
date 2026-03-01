@@ -68,10 +68,17 @@ export class UserRepository {
     return rows.length > 0 ? (rows[0] as User) : null;
   }
 
-  async create(user: Partial<User>): Promise<number> {
+  async getAll(): Promise<User[]> {
+    const [rows] = await pool.query<RowDataPacket[]>(
+      'SELECT id, email, display_name, handle, created_at FROM users'
+    );
+    return rows as User[];
+  }
+
+  async create(user: any): Promise<number> {
     const [result] = await pool.query<ResultSetHeader>(
-      'INSERT INTO users (email, password_hash, display_name) VALUES (?, ?, ?)',
-      [user.email, user.password_hash, user.display_name]
+      'INSERT INTO users (email, password_hash, display_name, handle) VALUES (?, ?, ?, ?)',
+      [user.email, user.password_hash, user.display_name, user.handle]
     );
     return result.insertId;
   }

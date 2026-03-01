@@ -42,6 +42,15 @@ export class AuthController {
       res.status(404).json({ error: error.message });
     }
   }
+
+  async getAllUsers(req: Request, res: Response) {
+    try {
+      const users = await authService.getAllUsers();
+      res.json(users);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 export class SkillController {

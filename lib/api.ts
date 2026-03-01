@@ -7,6 +7,7 @@ export interface RegisterParams {
     email: string;
     password: string;
     display_name: string;
+    handle?: string;
 }
 
 export interface AuthResponse {
@@ -88,9 +89,14 @@ export class ApiClient {
     }
 
     async register(credentials: RegisterParams): Promise<BaseResponse> {
+        const data = {
+            ...credentials,
+            display_name: credentials.display_name || credentials.email.split('@')[0],
+            handle: credentials.handle || credentials.email.split('@')[0]
+        };
         return this.request<BaseResponse>('/auth/register', {
             method: 'POST',
-            body: JSON.stringify(credentials),
+            body: JSON.stringify(data),
         });
     }
 

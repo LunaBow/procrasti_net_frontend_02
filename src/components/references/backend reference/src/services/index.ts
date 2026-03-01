@@ -22,16 +22,19 @@ export class AuthService {
     }
 
     const hashedPassword = await bcrypt.hash(input.password, 10);
+    const displayName = input.display_name || input.email.split('@')[0];
+    const handle = input.handle || input.email.split('@')[0];
     const id = await this.userRepository.create({
       email: input.email,
       password_hash: hashedPassword,
-      display_name: input.display_name ?? null,
+      display_name: displayName,
+      handle: handle,
     });
 
     const user: User = { 
       id, 
       email: input.email, 
-      display_name: input.display_name ?? null, 
+      display_name: displayName, 
       created_at: new Date() 
     };
     const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
@@ -64,6 +67,10 @@ export class AuthService {
 
   async findUserById(id: number): Promise<User | null> {
     return this.userRepository.findById(id);
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return this.userRepository.getAll();
   }
 }
 

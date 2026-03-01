@@ -23,6 +23,7 @@
                     email: formData.email,
                     password: formData.password,
                     display_name: formData.display_name || formData.email.split("@")[0],
+                    handle: formData.email.split("@")[0],
                 });
                 isLogin = true;
                 error = "Registrierung erfolgreich! Bitte logge dich jetzt ein.";

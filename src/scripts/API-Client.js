@@ -68,13 +68,14 @@ class APIClient {
         return data;
     }
 
-    async register({ email, password, display_name }) {
+    async register({ email, password, display_name, handle }) {
         return this.req("/auth/register", {
             method: "POST",
             body: JSON.stringify({
                 email,
                 password,
                 display_name: display_name || email.split("@")[0],
+                handle: handle || email.split("@")[0],
             }),
         });
     }
