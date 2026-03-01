@@ -1,4 +1,4 @@
-import { api } from "./API-Client.js";
+import { api } from '../../lib/api.ts';
 
 const triggers = document.getElementById("settingsTriggers");
 const save = document.getElementById("saveSettings");

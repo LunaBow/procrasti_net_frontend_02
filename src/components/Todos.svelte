@@ -1,8 +1,7 @@
 <script>
     import { onMount } from 'svelte';
-    import { api } from '../scripts/API-Client.js';
+    import { api } from '../../lib/api.ts';
     import Auth from './Auth.svelte';
-
     let todos = [];
     let newTodoTitle = "";
     let newTodoPriority = "medium";

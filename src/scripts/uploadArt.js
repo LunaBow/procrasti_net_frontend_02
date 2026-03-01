@@ -1,4 +1,4 @@
-import {api} from "./API-Client.js";
+import { api } from '../../lib/api.ts';
 import { initGallery } from "./displayGallery.js";
 
 const artType = document.getElementById("artType");

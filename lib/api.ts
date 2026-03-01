@@ -6,7 +6,7 @@ export interface LoginParams {
 export interface RegisterParams {
     email: string;
     password: string;
-    display_name: string;
+    display_name?: string;
     handle?: string;
 }
 
@@ -88,16 +88,22 @@ export class ApiClient {
         return data;
     }
 
-    async register(credentials: RegisterParams): Promise<BaseResponse> {
-        const data = {
+    async register(credentials: RegisterParams): Promise<any> {
+        const payload = {
             ...credentials,
             display_name: credentials.display_name || credentials.email.split('@')[0],
             handle: credentials.handle || credentials.email.split('@')[0]
         };
-        return this.request<BaseResponse>('/auth/register', {
+        const data = await this.request<any>('/auth/register', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(payload),
         });
+
+        if (data?.token) {
+            this.token = data.token;
+        }
+
+        return data;
     }
 
     async getCurrentUser(): Promise<any> {

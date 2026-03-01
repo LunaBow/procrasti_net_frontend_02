@@ -1,4 +1,4 @@
-import { api } from "./API-Client.js";
+import { api } from '../../lib/api.ts';
 
 const list = document.getElementById("skillList");
 const search = document.getElementById("skillSearch");

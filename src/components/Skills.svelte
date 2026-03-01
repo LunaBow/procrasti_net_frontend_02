@@ -1,8 +1,7 @@
 <script>
     import { onMount } from 'svelte';
-    import { api } from '../scripts/API-Client.js';
+    import { api } from '../../lib/api.ts';
     import SkillCard from './SkillCard.svelte';
-
     let skills = [];
     let search = "";
     let selectedCategory = "";

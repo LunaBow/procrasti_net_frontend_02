@@ -1,4 +1,4 @@
-import { api } from "./API-Client.js";
+import { api } from '../../lib/api.ts';
 
 const dateEl = document.getElementById("planDate");
 const btn = document.getElementById("loadPlan");

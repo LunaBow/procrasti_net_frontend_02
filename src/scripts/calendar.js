@@ -1,5 +1,4 @@
-import { api } from "./API-Client.js";
-
+import { api } from '../../lib/api.ts';
 function icsEscape(s=""){ return String(s).replace(/[\\,;]/g, "\\$&").replace(/\n/g, "\\n"); }
 
 function toICS(events) {
@@ -8,10 +7,10 @@ function toICS(events) {
         "VERSION:2.0",
         "PRODID:-//Procrasti-NET//EN",
     ];
-    for (const e of events) {
-        const uid = `${e.id}@procrasti-net`;
-        const dtStart = e.startsAt.replace(/[-:]/g,"").split(".")[0] + "Z";
-        const dtEnd = e.endsAt.replace(/[-:]/g,"").split(".")[0] + "Z";
+    for (const {id, title, startsAt, endsAt} of events) {
+        const uid = `${id}@procrasti-net`;
+        const dtStart = startsAt.replace(/[-:]/g,"").split(".")[0] + "Z";
+        const dtEnd = endsAt.replace(/[-:]/g,"").split(".")[0] + "Z";
         lines.push(
             "BEGIN:VEVENT",
             `UID:${uid}`,

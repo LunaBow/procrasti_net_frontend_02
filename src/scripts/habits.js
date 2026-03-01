@@ -1,5 +1,4 @@
-import { api } from "./API-Client.js";
-
+import { api } from '../../lib/api.ts';
 const form = document.getElementById("habitCreate");
 const nameEl = document.getElementById("habitName");
 const list = document.getElementById("habitList");

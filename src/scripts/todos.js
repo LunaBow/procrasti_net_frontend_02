@@ -1,4 +1,4 @@
-import { api } from "./API-Client.js";
+import { api } from '../../lib/api.ts';
 
 const form = document.getElementById("todoCreate");
 const title = document.getElementById("todoTitle");

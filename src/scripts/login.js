@@ -1,4 +1,4 @@
-import { api } from "./API-Client.js";
+import { api } from '../../lib/api.ts';
 
 const loginForm = document.getElementById("login-form");
 const status = document.getElementById("login-status");

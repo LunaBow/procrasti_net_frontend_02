@@ -1,4 +1,4 @@
-import { api } from "./API-Client.js";
+import { api } from '../../lib/api.ts';
 
 export async function displayMembers() {
     const userList = document.getElementById('user-list');

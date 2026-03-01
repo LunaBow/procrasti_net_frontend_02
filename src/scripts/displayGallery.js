@@ -1,5 +1,4 @@
-import { api } from "./API-Client.js";
-
+import { api } from '../../lib/api.ts';
 export async function initGallery() {
     const bookGrid = document.getElementById('book-grid');
     const drawingGrid = document.getElementById('drawing-grid');

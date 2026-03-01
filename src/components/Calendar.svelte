@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import { api } from '../scripts/API-Client.js';
+    import { api } from '../../lib/api.ts';
     import Auth from './Auth.svelte';
 
     let fromDate = new Date().toISOString().slice(0, 10);
@@ -124,7 +124,7 @@
         margin: 0 auto;
     }
     h2 {
-        font-family: var(--font-heading);
+        font-family: var(--font-heading),serif;
         margin-top: 0;
         color: var(--text);
         font-size: 1.75rem;
