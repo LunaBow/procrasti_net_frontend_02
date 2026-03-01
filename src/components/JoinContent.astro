@@ -5,11 +5,10 @@ import Habits from "./Habits.svelte";
 import Planner from "./Planner.svelte";
 import Settings from "./Settings.svelte";
 import Calendar from "./Calendar.svelte";
-import "../styles/global.css";
-
 ---
 
-  <div id="JoinContent"><section class="content">
+<div id="JoinContent">
+  <section class="content">
     <div id="SkillsVisible" style="display:block"><Skills client:load /></div>
     <div id="TodosVisible" style="display:none"><Todos client:load /></div>
     <div id="HabitsVisible" style="display:none"><Habits client:load /></div>
@@ -17,10 +16,4 @@ import "../styles/global.css";
     <div id="CalendarVisible" style="display:none"><Calendar client:load /></div>
     <div id="SettingsVisible" style="display:none"><Settings client:load /></div>
   </section>
-  </div>
-
-  <script>
-    import "../scripts/switchContent.js";
-    import "../scripts/skills.js";
-    import "../scripts/todos.js";
-  </script>
+</div>

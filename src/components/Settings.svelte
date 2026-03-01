@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { api } from "../../lib/api";
-    import Auth from "./Auth.svelte";
 
     let loading = true;
     let user: any = null;

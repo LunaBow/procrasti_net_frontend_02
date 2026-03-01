@@ -611,6 +611,13 @@ button, .btn {
 input, select {
   font-family: inherit;
 }
-astro-island[name="Auth"] {
-    display: none !important;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerRight {
+    width: 480px;
+    max-width: 45vw;
 }
