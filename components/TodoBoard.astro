@@ -1,0 +1,20 @@
+---
+
+---
+<section class="panel">
+    <h2>To-dos</h2>
+
+    <form id="todoCreate" class="row">
+        <label for="todoTitle" class="sr-only">Task Title</label>
+        <input id="todoTitle" type="text" placeholder="Add a task (tiny is allowed)" required />
+        <label for="todoPriority" class="sr-only">Task Priority</label>
+        <select id="todoPriority">
+            <option value="low">low</option>
+            <option value="med" selected>med</option>
+            <option value="high">high</option>
+        </select>
+        <input type="submit" value="Add" />
+    </form>
+
+    <div id="todoList" class="stack"></div>
+</section>
