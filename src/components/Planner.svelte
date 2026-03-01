@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { api } from "../../lib/api";
-    import Auth from "./Auth.svelte";
 
     let selectedDate = new Date().toISOString().slice(0, 10);
     let items: any[] = [];
@@ -40,7 +39,7 @@
     {#if !user && !loading}
         <div class="auth-wrapper">
             <p>Please log in to use this feature.</p>
-            <Auth />
+
         </div>
     {:else}
         {#if error}<p class="error">{error}</p>{/if}
