@@ -4,6 +4,7 @@ class APIClient {
         // Astro client-side env vars must start with PUBLIC_
         const envBase = (import.meta.env.PUBLIC_API_URL || "").trim();
         this.baseUrl = (envBase || "https://mt231043-10992.node.ustp.cloud/api").replace(/\/$/, "");
+        // WebSocket URL might need adjustment on CampusCloud if port 10992 isn't exposed for wss
         this.wsUrl = (import.meta.env.PUBLIC_WS_URL || "wss://mt231043-10992.node.ustp.cloud:10992");
     }
 
@@ -173,13 +174,13 @@ class APIClient {
         });
     }
 
-    listPlan(fromISO, toISO) {
+    listPlan(_fromISO, _toISO) {
         // Planner will now just use listTodos and handle dates
         console.warn("listPlan endpoint not implemented in backend. Redirecting to listTodos.");
         return this.listTodos();
     }
 
-    scheduleTodo(todoId, startsAtISO, endsAtISO) {
+    scheduleTodo(todoId, startsAtISO, _endsAtISO) {
         // Just patch the due_date
         return this.updateTodo(todoId, { due_date: startsAtISO });
     }
@@ -188,7 +189,7 @@ class APIClient {
         return Promise.resolve({ error: "Not implemented in backend" });
     }
 
-    updateSettings(data) {
+    updateSettings(_data) {
         return Promise.resolve({ error: "Not implemented in backend" });
     }
 }

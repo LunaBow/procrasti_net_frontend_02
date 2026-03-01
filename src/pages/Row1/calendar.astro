@@ -1,0 +1,14 @@
+---
+import Header from "../../components/Header.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+import "../../styles/global.css";
+import Calendar from "../../components/Calendar.svelte";
+---
+
+<div id="entireContentWrapper">
+    <Header />
+    <Navigation />
+    <Calendar client:load />
+    <Footer />
+</div>
