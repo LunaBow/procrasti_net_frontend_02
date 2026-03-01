@@ -52,11 +52,13 @@ class APIClient {
         return data;
     }
 
-    async register({ username, password, email }) {
+    async register({ username, password, email, display_name, handle }) {
         return this.req("/auth/register", {
             method: "POST",
             body: JSON.stringify({
-                username,
+                username, // Fallback for backend that might use this
+                display_name: display_name || username,
+                handle,
                 password,
                 email,
                 profileDescription: "member",

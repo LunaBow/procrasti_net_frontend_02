@@ -4,6 +4,7 @@
 
     let email = "";
     let username = "";
+    let displayName = "";
     let password = "";
     let isRegister = false;
     let error = "";
@@ -25,7 +26,13 @@
         error = "";
         try {
             if (isRegister) {
-                await api.register({ username, password, email });
+                await api.register({
+                    email,
+                    handle: username,
+                    display_name: displayName || username,
+                    username,
+                    password
+                });
                 // After register, attempt login
                 await api.login(username, password);
             } else {
@@ -70,6 +77,10 @@
                     <div class="field">
                         <label for="auth-email">Email Address</label>
                         <input id="auth-email" type="email" bind:value={email} required placeholder="Enter email" />
+                    </div>
+                    <div class="field">
+                        <label for="auth-displayname">Display Name</label>
+                        <input id="auth-displayname" type="text" bind:value={displayName} required placeholder="Enter display name" />
                     </div>
                 {/if}
                 <div class="field">

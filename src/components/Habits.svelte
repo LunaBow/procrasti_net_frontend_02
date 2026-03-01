@@ -31,7 +31,7 @@
         try {
             await api.createHabit({ 
                 title: newHabitName.trim(),
-                schedule_type: "daily"
+                recurrence_type: "daily"
             });
             newHabitName = "";
             await loadHabits();
