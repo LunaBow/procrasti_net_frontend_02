@@ -100,16 +100,16 @@
 </script>
 
 <div class="authWrap" class:open>
-    <div class="pill">
+    <div class="auth-pill">
         <button
                 type="button"
-                class="pillToggle"
+                class="auth-pillToggle"
                 on:click={toggle}
                 aria-expanded={open}
                 aria-controls="auth-panel"
         >
-            <div class="pillLeft">
-        <span class="pillTitle">
+            <div class="auth-pillLeft">
+        <span class="auth-pillTitle">
           {#if isLoggedIn}
             Logged in{#if user?.display_name} as {user.display_name}{/if}
           {:else}
@@ -196,7 +196,7 @@
         box-shadow: 0 14px 40px rgba(0,0,0,0.14);
     }
 
-    .pill {
+    .outh-pill {
         height: 56px;
         display: flex;
         align-items: stretch;

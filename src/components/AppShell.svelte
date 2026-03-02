@@ -6,7 +6,6 @@
     import Settings from './Settings.svelte';
     import Calendar from './Calendar.svelte';
     import { onMount } from 'svelte';
-    import AppTabs from "../components/AppTabs.svelte";
 
 
 
