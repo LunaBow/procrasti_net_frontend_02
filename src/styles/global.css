@@ -63,13 +63,13 @@ html, body {
   min-height: 100vh;
   background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font-ui);
+    font-family: var(--font-ui), serif;
   line-height: 1.6;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), serif;
   font-weight: 800;
   line-height: 1.1;
   margin: 0;
@@ -529,7 +529,6 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-top: 4px solid var(--primary);
     border: 1px solid var(--border);
     transition: transform 0.2s ease;
 }

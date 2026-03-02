@@ -29,7 +29,7 @@ try {
     <Header />
     <Navigation />
     
-    <main class="panel">
+    <div class="panel">
         <h2>Skills in Category: {categoryName}</h2>
         
         {skills.length === 0 ? (
@@ -39,12 +39,11 @@ try {
                 {skills.map((s: any) => (
                         <SkillCard client:load skill={s} />
                 ))}
-                )}
-            )</div>
+            </div>
         )}
         
         <a href="/Row1/skills" class="btn">Back to Skill Browser</a>
-    </main>
+    </div>
     
     <Footer />
 </div>
