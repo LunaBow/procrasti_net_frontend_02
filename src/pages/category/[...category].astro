@@ -4,7 +4,6 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Navigation from "../../components/Navigation.astro";
 import Footer from "../../components/Footer.astro";
-import "../../styles/global.css";
 import SkillCard from "../../components/SkillCard.svelte";
 
 const { category } = Astro.params;
@@ -38,9 +37,10 @@ try {
         ) : (
             <div class="grid">
                 {skills.map((s: any) => (
-                    <SkillCard skill={s} />
+                        <SkillCard client:load skill={s} />
                 ))}
-            </div>
+                )}
+            )</div>
         )}
         
         <a href="/Row1/skills" class="btn">Back to Skill Browser</a>
@@ -62,7 +62,7 @@ try {
         gap: 1.5rem;
         margin-top: 1.5rem;
     }
-    .btn {
+    .panel .btn {
         display: inline-block;
         margin-top: 2rem;
         padding: 0.5rem 1rem;

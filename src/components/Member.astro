@@ -1,32 +1,32 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import AuthSvelte from "../components/Auth.svelte";
 ---
+<Layout title="Member Login">
+    <div id="entireContentWrapper">
+        <Header />
+        <Navigation />
 
-<section class="member-info">
-    <div id="member">
-        <h2>Welcome back, you absolute, dysfunctional princes and princesses!</h2>
+        <main class="auth-page">
+            <AuthSvelte client:load />
+        </main>
 
-        <p class="member-greeting">
-            This is Procrasti-net: We want it to stay cozy, but also AAAAAHHH OMG HELP MEEEE!!!
-            If you had gotten a dollar for every greeting you read, you'd be rich by now.
-        </p>
-
-        <section id="members-section">
-            <h2>Fellow Survivors (Members)</h2>
-            <ul id="user-list">
-                <li>Luna</li>
-                <li>Verena</li>
-                <li>Justus Jonas von den drei ???</li>
-
-            </ul>
-        </section>
-
-        <p class="member-encouragement">
-            Reminder: you need to be perfect. You need to be better than everyone else. If you are not perfect, you might as well quit now.
-           Also don't quit now, we are not telling you to do something you might regret.
-        </p>
+        <Footer />
     </div>
-</section>
+</Layout>
 
-<script>
-    import "../scripts/showAllMembers.js";
-</script>
+<style>
+    .auth-page {
+        min-height: calc(100vh - 200px); /* adjust if header/footer taller */
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+    }
+
+    .auth-page :global(.auth-card) {
+        width: min(420px, 100%);
+    }
+</style>
