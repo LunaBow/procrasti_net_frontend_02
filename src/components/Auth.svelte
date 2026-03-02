@@ -187,13 +187,20 @@
         background: var(--surface, rgba(255,255,255,0.9));
         backdrop-filter: blur(6px);
         max-height: 56px;
-        transition: max-height 260ms ease, border-radius 260ms ease, box-shadow 260ms ease;
+        transition: max-height 260ms ease, border-radius 260ms ease, box-shadow 260ms ease, transform 260ms ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .authWrap:hover {
+        box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        transform: translateY(-1px);
     }
 
     .authWrap.open {
         border-radius: 18px;
         max-height: 420px;
         box-shadow: 0 14px 40px rgba(0,0,0,0.14);
+        transform: none;
     }
 
     .auth-trigger-pill {

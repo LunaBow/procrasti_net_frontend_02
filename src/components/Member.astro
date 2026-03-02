@@ -8,10 +8,15 @@ import AuthSvelte from "../components/Auth.svelte";
 <Layout title="Member Login">
     <div id="entireContentWrapper">
         <Header showAuth={false} />
+        
+        <div class="auth-container">
+            <AuthSvelte client:load />
+        </div>
+
         <Navigation />
 
         <main class="auth-page">
-            <AuthSvelte client:load />
+            <ul id="user-list" class="member-list"></ul>
         </main>
 
         <Footer />
@@ -19,15 +24,26 @@ import AuthSvelte from "../components/Auth.svelte";
 </Layout>
 
 <style>
-    .auth-page{
-        flex: 1;
-        display: grid;
-        place-items: center;
-        padding: 2rem 1rem;
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        padding: 1rem;
+        margin-bottom: 1rem;
     }
 
-    /* style the actual auth container your Svelte renders */
-    .auth-page :global(#AuthVisible){
-        max-width: 480px;
+    .auth-page {
+        flex: 1;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+    
+    .member-list {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
     }
 </style>
