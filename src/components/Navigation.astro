@@ -2,11 +2,12 @@
 import AuthSvelte from "../components/Auth.svelte";
 ---
 
-<div class="auth-container">
-    <AuthSvelte client:load />
-</div>
+
 
 <section id="nav_ul">
+    <div class="auth-container">
+        <AuthSvelte client:load />
+    </div>
     <div id="navWrapper" class="nav-stack">
 
         <!-- Row 1: core app navigation -->
@@ -53,9 +54,11 @@ import AuthSvelte from "../components/Auth.svelte";
     .auth-container {
         display: flex;
         justify-content: center;
+        width: 100%;
+        max-width: 400px;
         padding: 0.5rem;
         margin-bottom: 0.5rem;
-        position: relative; /* Add this */
-        z-index: 10; /* Add this */
+        position: relative;
+        z-index: 10;
     }
 </style>

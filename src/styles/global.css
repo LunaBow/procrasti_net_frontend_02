@@ -498,3 +498,7 @@ button, .btn {
 input, select {
   font-family: inherit;
 }
+astro-island {
+    display: block;
+    width: 100%;
+}
