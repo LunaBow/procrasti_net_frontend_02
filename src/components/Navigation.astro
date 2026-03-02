@@ -1,7 +1,10 @@
 ---
-
-
+import AuthSvelte from "../components/Auth.svelte";
 ---
+
+<div class="auth-container">
+    <AuthSvelte client:load />
+</div>
 
 <section id="nav_ul">
     <div id="navWrapper" class="nav-stack">
@@ -45,3 +48,12 @@
 
     </div>
 </section>
+
+<style>
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+</style>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { api } from "../../lib/api";
+    import Auth from "./Auth.svelte";
 
     let loading = true;
     let user: any = null;
@@ -46,7 +47,7 @@
     <div class="auth-section">
         {#if loading}
             <p>Checking authentication...</p>
-        {:else if !user}
+        {:else if !user && !devMode}
             <div class="auth-prompt">
                 <p>Please log in to use this feature.</p>
                 <Auth />

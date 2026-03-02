@@ -3,16 +3,11 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
-import AuthSvelte from "../components/Auth.svelte";
 ---
 <Layout title="Member Login">
     <div id="entireContentWrapper">
-        <Header showAuth={false} />
+        <Header />
         
-        <div class="auth-container">
-            <AuthSvelte client:load />
-        </div>
-
         <Navigation />
 
         <main class="auth-page">
@@ -24,13 +19,6 @@ import AuthSvelte from "../components/Auth.svelte";
 </Layout>
 
 <style>
-    .auth-container {
-        display: flex;
-        justify-content: center;
-        padding: 1rem;
-        margin-bottom: 1rem;
-    }
-
     .auth-page {
         flex: 1;
         width: 100%;
