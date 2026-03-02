@@ -106,58 +106,7 @@ a:hover {
     gap: 1rem;
 }
 
-/* The container that morphs */
-#AuthVisible {
-    width: 100%;
-    max-width: 480px;
-    border-radius: 999px;          /* pill when closed */
-    overflow: hidden;              /* hide panel while collapsing */
-    transition:
-            max-height 280ms ease,
-            border-radius 280ms ease,
-            box-shadow 280ms ease,
-            transform 280ms ease,
-            opacity 200ms ease;
-    transform-origin: top center;
-    max-height: 56px;              /* pill height */
-    opacity: 1;
-}
 
-/* Expanded state becomes a panel */
-#AuthVisible.open {
-    border-radius: 20px;
-    max-height: 520px;             /* enough for forms */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-}
-
-/* The inside panel content */
-.auth-panel {
-    padding: 14px 16px 16px;
-}
-
-/* Optional: slight slide/fade for content when opening */
-.auth-panel-inner {
-    opacity: 0;
-    transform: translateY(-6px);
-    transition: opacity 200ms ease, transform 200ms ease;
-}
-
-#AuthVisible.open .auth-panel-inner {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Auth Area in Header */
-.auth-area {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-#AuthVisible.open {
-    transform: scale(1.01);
-}
 .pill {
     width: 100%;
     height: 56px;
