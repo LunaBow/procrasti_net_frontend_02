@@ -93,7 +93,17 @@
 </div>
 
 <style>
-    .authBox { background: var(--surface, #fff); border: 1px solid var(--border, #ddd); border-radius: 16px; padding: 16px; width: 100%; max-width: 400px; margin: 0 auto; }
+    .authBox {
+        background: var(--surface, #fff);
+        border: 1px solid var(--border, #ddd);
+        border-radius: 16px;
+        padding: 16px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        /* Ensure it doesn't stick to the top if there's flex behavior elsewhere */
+        position: relative;
+    }
     .top { display:flex; justify-content: space-between; gap: 12px; align-items: baseline; }
     .muted { margin: 4px 0 0; opacity: 0.7; font-size: 0.9rem; }
     .link { border:0; background:transparent; cursor:pointer; color: var(--primary, #2563eb); font-weight: 800; }
