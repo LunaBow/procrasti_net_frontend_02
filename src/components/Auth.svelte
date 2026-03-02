@@ -291,6 +291,13 @@
         border-radius: 12px;
         border: 1px solid var(--border, rgba(0,0,0,0.12));
         background: var(--surface-alt, rgba(255,255,255,0.65));
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form input:focus {
+        outline: none;
+        border-color: var(--primary, #2563eb);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary, #2563eb) 20%, transparent);
     }
 
     .primary {
@@ -301,6 +308,12 @@
         cursor: pointer;
         background: var(--primary, #2563eb);
         color: white;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .primary:hover:not(:disabled) {
+        background: var(--primary-hover, #1d4ed8);
+        transform: translateY(-1px);
     }
 
     .msg {
