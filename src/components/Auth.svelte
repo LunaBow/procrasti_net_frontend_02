@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { api } from "../../lib/api"; // src/components/Auth.svelte -> src/lib/api.ts
+    import { api } from "../../lib/api"; // adjust if your path differs
 
     // UI state
     let open = false;
@@ -15,39 +15,45 @@
     let error = "";
     let success = "";
 
-    // optional: show who is logged in
+    // who is logged in (optional)
     let user: any = null;
+
+    // derive auth state from your api singleton
+    $: isLoggedIn = !!api.token;
+
+    function resetMsgs() {
+        error = "";
+        success = "";
+    }
 
     function toggle() {
         open = !open;
-        error = "";
-        success = "";
+        resetMsgs();
     }
 
     function switchMode(m: "login" | "register") {
         mode = m;
         open = true;
-        error = "";
-        success = "";
+        resetMsgs();
     }
 
     async function refreshUser() {
-        user = await api.getCurrentUser();
+        try {
+            user = await api.getCurrentUser();
+        } catch {
+            user = null;
+        }
     }
 
     async function handleLogin(e: Event) {
         e.preventDefault();
         loading = true;
-        error = "";
-        success = "";
+        resetMsgs();
         try {
             await api.login({ email: email.trim(), password });
             await refreshUser();
             success = "Logged in.";
-            // close after a beat so you see it worked
-            setTimeout(() => {
-                open = false;
-            }, 350);
+            setTimeout(() => (open = false), 350);
         } catch (err: any) {
             error = err?.message ?? "Login failed";
         } finally {
@@ -58,18 +64,16 @@
     async function handleRegister(e: Event) {
         e.preventDefault();
         loading = true;
-        error = "";
-        success = "";
+        resetMsgs();
         try {
             await api.register({
                 email: email.trim(),
                 password,
                 display_name: displayName.trim() || email.trim().split("@")[0],
             });
-            await refreshUser();
-            success = "Registered.";
-            // stay open but flip to login for clarity
+            success = "Registered. Now log in.";
             mode = "login";
+            open = true;
         } catch (err: any) {
             error = err?.message ?? "Register failed";
         } finally {
@@ -77,12 +81,11 @@
         }
     }
 
-    function logout() {
+    async function logout() {
         api.logout();
         user = null;
         open = false;
-        error = "";
-        success = "";
+        resetMsgs();
     }
 
     onMount(async () => {
@@ -90,12 +93,7 @@
     });
 </script>
 
-<!--
-  This is intentionally SMALL by default.
-  It only grows when `open === true`.
--->
 <div class="authWrap" class:open>
-    <!-- pill header (NOT a button, so we can safely have buttons inside) -->
     <div
             class="pill"
             role="button"
@@ -105,19 +103,25 @@
     >
         <div class="pillLeft">
       <span class="pillTitle">
-        {#if api.token}
+        {#if isLoggedIn}
           Logged in{#if user?.display_name} as {user.display_name}{/if}
         {:else}
           Member Access
         {/if}
       </span>
+
             <span class="pillSub">
-        {open ? "Tap to close" : api.token ? "You’re good." : "Log in or sign up"}
+        {#if isLoggedIn}
+          {open ? "Tap to close" : "Logout is here."}
+        {:else}
+          {open ? "Tap to close" : "Log in or sign up"}
+        {/if}
       </span>
         </div>
 
+        <!-- IMPORTANT: stopPropagation so clicking buttons doesn't toggle the pill -->
         <div class="pillRight" on:click|stopPropagation>
-            {#if api.token}
+            {#if isLoggedIn}
                 <button type="button" class="ghost" on:click={logout}>Logout</button>
             {:else}
                 <button type="button" class="ghost" on:click={() => switchMode("login")}>Log in</button>
@@ -126,12 +130,11 @@
         </div>
     </div>
 
-    <!-- expanding panel -->
     <div class="panel" aria-hidden={!open}>
         {#if open}
-            {#if api.token}
+            {#if isLoggedIn}
                 <div class="logged">
-                    <p>You’re logged in. Go be productive or whatever. 🧃</p>
+                    <p>You’re logged in. Only thing left is to log out or close this. ✨</p>
                 </div>
             {:else}
                 <form class="form" on:submit={mode === "login" ? handleLogin : handleRegister}>
@@ -156,11 +159,7 @@
                     />
 
                     <button class="primary" type="submit" disabled={loading}>
-                        {#if loading}
-                            Working...
-                        {:else}
-                            {mode === "login" ? "Login" : "Create account"}
-                        {/if}
+                        {loading ? "Working..." : mode === "login" ? "Login" : "Create account"}
                     </button>
 
                     {#if error}<p class="msg error">{error}</p>{/if}
@@ -172,7 +171,6 @@
 </div>
 
 <style>
-    /* small by default */
     .authWrap {
         width: min(560px, 100%);
         margin: 0 auto;

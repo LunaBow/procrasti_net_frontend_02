@@ -7,7 +7,7 @@ import AuthSvelte from "../components/Auth.svelte";
 ---
 <Layout title="Member Login">
     <div id="entireContentWrapper">
-        <Header />
+        <Header showAuth={false} />
         <Navigation />
 
         <main class="auth-page">
@@ -19,14 +19,15 @@ import AuthSvelte from "../components/Auth.svelte";
 </Layout>
 
 <style>
-    .auth-page {
-        min-height: calc(100vh - 200px); /* adjust if header/footer taller */
+    .auth-page{
+        flex: 1;
         display: grid;
         place-items: center;
         padding: 2rem 1rem;
     }
 
-    .auth-page :global(.auth-card) {
-        width: min(420px, 100%);
+    /* style the actual auth container your Svelte renders */
+    .auth-page :global(#AuthVisible){
+        max-width: 480px;
     }
 </style>
