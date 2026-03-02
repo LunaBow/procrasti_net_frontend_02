@@ -100,16 +100,16 @@
 </script>
 
 <div class="authWrap" class:open>
-    <div class="auth-pill">
+    <div class="auth-trigger-pill">
         <button
                 type="button"
-                class="auth-pillToggle"
+                class="auth-toggle"
                 on:click={toggle}
                 aria-expanded={open}
                 aria-controls="auth-panel"
         >
-            <div class="auth-pillLeft">
-        <span class="auth-pillTitle">
+            <div class="auth-left">
+        <span class="auth-title">
           {#if isLoggedIn}
             Logged in{#if user?.display_name} as {user.display_name}{/if}
           {:else}
@@ -117,7 +117,7 @@
           {/if}
         </span>
 
-                <span class="pillSub">
+                <span class="auth-sub">
           {#if isLoggedIn}
             {open ? "Tap to close" : "Logout is here."}
           {:else}
@@ -127,7 +127,7 @@
             </div>
         </button>
 
-        <div class="pillRight">
+        <div class="auth-right">
             {#if isLoggedIn}
                 <button type="button" class="ghost" on:click={logout}>Logout</button>
             {:else}
@@ -196,7 +196,7 @@
         box-shadow: 0 14px 40px rgba(0,0,0,0.14);
     }
 
-    .outh-pill {
+    .auth-trigger-pill {
         height: 56px;
         display: flex;
         align-items: stretch;
@@ -205,7 +205,7 @@
         gap: 12px;
     }
 
-    .pillToggle {
+    .auth-toggle {
         flex: 1;
         display: flex;
         align-items: center;
@@ -217,20 +217,20 @@
         min-width: 0;
     }
 
-    .pillToggle:focus {
+    .auth-toggle:focus {
         outline: 2px solid rgba(0,0,0,0.2);
         outline-offset: 2px;
         border-radius: 12px;
     }
 
-    .pillLeft {
+    .auth-left {
         display: flex;
         flex-direction: column;
         line-height: 1.05;
         min-width: 0;
     }
 
-    .pillTitle {
+    .auth-title {
         font-weight: 800;
         font-size: 0.98rem;
         color: var(--text, #222);
@@ -239,7 +239,7 @@
         text-overflow: ellipsis;
     }
 
-    .pillSub {
+    .auth-sub {
         font-size: 0.8rem;
         opacity: 0.75;
         white-space: nowrap;
@@ -247,7 +247,7 @@
         text-overflow: ellipsis;
     }
 
-    .pillRight {
+    .auth-right {
         display: flex;
         gap: 8px;
         flex-shrink: 0;
