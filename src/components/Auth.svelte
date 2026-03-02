@@ -1,29 +1,31 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { api } from "../../lib/api"; // adjust if your path differs
+    import { api } from "../../lib/api";
 
     // UI state
-    let open = false;
+    let open: boolean = false;
     let mode: "login" | "register" = "login";
 
     // form state
-    let email = "";
-    let password = "";
-    let displayName = "";
+    let email: string = "";
+    let password: string = "";
+    let displayName: string = "";
 
-    let loading = false;
-    let error = "";
-    let success = "";
+    let loading: boolean = false;
+    let error: string = "";
+    let success: string = "";
 
-    // who is logged in (optional)
     let user: any = null;
-
-    // derive auth state from your api singleton
-    $: isLoggedIn = !!api.token;
+    let isLoggedIn: boolean = false;
 
     function resetMsgs() {
         error = "";
         success = "";
+    }
+
+    function syncAuthState() {
+        // don't trust reactivity on api.token if it's a plain property
+        isLoggedIn = !!api.token;
     }
 
     function toggle() {
@@ -42,6 +44,8 @@
             user = await api.getCurrentUser();
         } catch {
             user = null;
+        } finally {
+            syncAuthState();
         }
     }
 
@@ -58,6 +62,7 @@
             error = err?.message ?? "Login failed";
         } finally {
             loading = false;
+            syncAuthState();
         }
     }
 
@@ -81,11 +86,12 @@
         }
     }
 
-    async function logout() {
+    function logout() {
         api.logout();
         user = null;
         open = false;
         resetMsgs();
+        syncAuthState();
     }
 
     onMount(async () => {
@@ -94,33 +100,34 @@
 </script>
 
 <div class="authWrap" class:open>
-    <div
-            class="pill"
-            role="button"
-            tabindex="0"
-            on:click={toggle}
-            on:keydown={(e) => (e.key === "Enter" || e.key === " ") && toggle()}
-    >
-        <div class="pillLeft">
-      <span class="pillTitle">
-        {#if isLoggedIn}
-          Logged in{#if user?.display_name} as {user.display_name}{/if}
-        {:else}
-          Member Access
-        {/if}
-      </span>
+    <div class="pill">
+        <button
+                type="button"
+                class="pillToggle"
+                on:click={toggle}
+                aria-expanded={open}
+                aria-controls="auth-panel"
+        >
+            <div class="pillLeft">
+        <span class="pillTitle">
+          {#if isLoggedIn}
+            Logged in{#if user?.display_name} as {user.display_name}{/if}
+          {:else}
+            Member Access
+          {/if}
+        </span>
 
-            <span class="pillSub">
-        {#if isLoggedIn}
-          {open ? "Tap to close" : "Logout is here."}
-        {:else}
-          {open ? "Tap to close" : "Log in or sign up"}
-        {/if}
-      </span>
-        </div>
+                <span class="pillSub">
+          {#if isLoggedIn}
+            {open ? "Tap to close" : "Logout is here."}
+          {:else}
+            {open ? "Tap to close" : "Log in or sign up"}
+          {/if}
+        </span>
+            </div>
+        </button>
 
-        <!-- IMPORTANT: stopPropagation so clicking buttons doesn't toggle the pill -->
-        <div class="pillRight" on:click|stopPropagation>
+        <div class="pillRight">
             {#if isLoggedIn}
                 <button type="button" class="ghost" on:click={logout}>Logout</button>
             {:else}
@@ -130,7 +137,7 @@
         </div>
     </div>
 
-    <div class="panel" aria-hidden={!open}>
+    <div class="panel" id="auth-panel" aria-hidden={!open}>
         {#if open}
             {#if isLoggedIn}
                 <div class="logged">
@@ -192,12 +199,28 @@
     .pill {
         height: 56px;
         display: flex;
-        align-items: center;
+        align-items: stretch;
         justify-content: space-between;
         padding: 0 14px;
-        cursor: pointer;
-        user-select: none;
         gap: 12px;
+    }
+
+    .pillToggle {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background: transparent;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        text-align: left;
+        min-width: 0;
+    }
+
+    .pillToggle:focus {
+        outline: 2px solid rgba(0,0,0,0.2);
+        outline-offset: 2px;
+        border-radius: 12px;
     }
 
     .pillLeft {
@@ -228,6 +251,7 @@
         display: flex;
         gap: 8px;
         flex-shrink: 0;
+        align-items: center;
     }
 
     .ghost {

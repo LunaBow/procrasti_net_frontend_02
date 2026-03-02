@@ -621,3 +621,37 @@ input, select {
     width: 480px;
     max-width: 45vw;
 }
+
+.pill {
+    height: 56px;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 0 14px;
+    gap: 12px;
+}
+
+.pillToggle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    min-width: 0;
+}
+
+.pillToggle:focus {
+    outline: 2px solid rgba(0,0,0,0.2);
+    outline-offset: 2px;
+    border-radius: 12px;
+}
+
+.pillLeft {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+    min-width: 0;
+}
