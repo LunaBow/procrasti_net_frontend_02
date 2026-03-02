@@ -140,23 +140,11 @@
         border-color: #52525b;
     }
 
-    .close-btn {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        background: transparent;
-        border: none;
-        color: #71717a;
-        cursor: pointer;
-        font-size: 1.2rem;
-        transition: color 0.2s;
-    }
 
     .close-btn:hover {
         color: #fff;
     }
 
-    /* Your original styles below */
     .authBox {
         background: var(--surface, #fff);
         border: 1px solid var(--border, #ddd);
@@ -183,7 +171,7 @@
         position: absolute;
         top: 12px;
         right: 12px;
-        background: rgba(0,0,0,0.1); /* Slight background to separate it from text */
+        background: rgba(0,0,0,0.1);
         width: 28px;
         height: 28px;
         display: flex;
@@ -193,8 +181,6 @@
         border: none;
         color: #71717a;
         cursor: pointer;
-        font-size: 0.9rem;
-        transition: all 0.2s;
         z-index: 60; /* Higher than the content */
     }
     .close-btn:hover {
