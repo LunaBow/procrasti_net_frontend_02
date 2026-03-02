@@ -113,14 +113,13 @@
 </div>
 
 <style>
-    /* New styles for the interactive wrapper */
     .auth-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
-        min-height: 48px;
         position: relative;
+        flex-grow: 1;
     }
 
     .pill-btn {
@@ -162,11 +161,12 @@
         background: var(--surface, #fff);
         border: 1px solid var(--border, #ddd);
         border-radius: 16px;
-        padding: 16px;
+        padding: 24px;
         width: 100%;
         max-width: 400px;
         position: relative;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        z-index: 50;
     }
     .top { display:flex; justify-content: space-between; gap: 12px; align-items: baseline; }
     .muted { margin: 4px 0 0; opacity: 0.7; font-size: 0.9rem; }
@@ -179,4 +179,26 @@
     .msg { padding: 10px 12px; border-radius: 12px; font-weight: 800; }
     .error { background: rgba(220, 38, 38, 0.08); color: #b91c1c; border: 1px solid rgba(220, 38, 38, 0.2); }
     .ok { background: rgba(34, 197, 94, 0.08); color: #166534; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .close-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(0,0,0,0.1); /* Slight background to separate it from text */
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: none;
+        color: #71717a;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        z-index: 60; /* Higher than the content */
+    }
+    .close-btn:hover {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+    }
 </style>
