@@ -197,5 +197,17 @@ export class ApiClient {
     }
 }
 
+let getBooks;
+
+try {
+
+    getBooks = async () => {
+        const response = await fetch(`${API_BASE}/books`);
+        return response.json();
+    };
+} catch (error) {
+    console.error("Failed to fetch books: Don't exist yet lol", error);
+}
+
 const API_BASE = (import.meta.env.PUBLIC_API_URL || "https://mt231043-10992.node.ustp.cloud/api" || "https://cors-anywhere.herokuapp.com/https://mt231043-10992.node.ustp.cloud/api").replace(/\/$/, "");
 export const api = new ApiClient(API_BASE);
