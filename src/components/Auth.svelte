@@ -63,8 +63,8 @@
             {#if api.token}
                 <div class="top">
                     <div>
-                        <h3>Welcome back!</h3>
-                        <p class="muted">You are logged in.</p>
+                        <h3>{isLogin ? "Login" : "Register"}</h3>
+                        <p class="muted">{isLogin ? "Use your email + password." : "Create an account."}</p>
                     </div>
                     <button class="ghost" type="button" on:click={logout}>Logout</button>
                 </div>
@@ -123,6 +123,7 @@
     }
 
     .pill-btn {
+        display: inline-block;
         background: var(--surface, #18181b);
         color: #d4d4d8;
         border: 1px solid var(--border, #27272a);
@@ -156,7 +157,13 @@
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
         z-index: 50;
     }
-    .top { display:flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    .top {
+        display:flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+        margin-top: 8px;
+    }
     .muted { margin: 4px 0 0; opacity: 0.7; font-size: 0.9rem; }
     .link { border:0; background:transparent; cursor:pointer; color: var(--primary, #2563eb); font-weight: 800; }
     .ghost { margin-top: 10px; border: 1px solid var(--border, #ddd); background: transparent; border-radius: 999px; padding: 6px 10px; cursor:pointer; }
@@ -171,7 +178,7 @@
         position: absolute;
         top: 12px;
         right: 12px;
-        background: rgba(0,0,0,0.1);
+        background: #27272a;
         width: 28px;
         height: 28px;
         display: flex;
