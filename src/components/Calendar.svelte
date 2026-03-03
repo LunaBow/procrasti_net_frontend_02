@@ -7,7 +7,7 @@
     let loading = true;
     let error = "";
     let user: any = null;
-    // Add these to your script
+
     let days: any[] = [];
     const now = new Date();
     const currentMonth = now.getMonth();
@@ -29,8 +29,6 @@
         }
         days = tempDays;
     }
-
-
 
     function icsEscape(s = "") {
         return String(s).replace(/[\\,;]/g, "\\$&").replace(/\n/g, "\\n");
@@ -89,15 +87,14 @@
         checkUser();
         generateCalendar();
     });
-
 </script>
+
 <section class="panel">
     <h2>Calendar Export</h2>
 
     {#if !user && !loading}
         <div class="auth-wrapper">
             <p>Please log in to use this feature.</p>
-
         </div>
     {:else}
         <div class="export-box">
@@ -108,27 +105,27 @@
                 {loading ? "Exporting…" : "Download .ics"}
             </button>
 
-            <div class="calendar-container">
-                <h3>{now.toLocaleString('default', { month: 'long' })} {currentYear}</h3>
-                <div class="calendar-grid">
-                    {#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as d}
-                        <div class="day-name">{d}</div>
-                    {/each}
-
-                    {#each days as day}
-                        <div class="day" class:today={day?.isToday}>
-                            {#if day}
-                                <span class="date-num">{day.num}</span>
-                                {#if day.isToday}
-                                    <div class="event-indicator" title="Today"></div>
-                                {/if}
-                            {/if}
-                        </div>
-                    {/each}
-                </div>
-            </div>
-
             {#if error}<p class="error">{error}</p>{/if}
+        </div>
+
+        <div class="calendar-container">
+            <h3>{now.toLocaleString('default', { month: 'long' })} {currentYear}</h3>
+            <div class="calendar-grid">
+                {#each ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as d}
+                    <div class="day-name">{d}</div>
+                {/each}
+
+                {#each days as day}
+                    <div class="day" class:today={day?.isToday}>
+                        {#if day}
+                            <span class="date-num">{day.num}</span>
+                            {#if day.isToday}
+                                <div class="event-indicator" title="Today"></div>
+                            {/if}
+                        {/if}
+                    </div>
+                {/each}
+            </div>
         </div>
     {/if}
 </section>
@@ -139,7 +136,6 @@
         border: 1px solid var(--border);
         border-radius: var(--radius-lg);
         padding: 2.5rem;
-        /* Horizontal margins */
         margin: 0 1.5rem;
         box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
     }
@@ -162,7 +158,7 @@
         background: rgba(0, 0, 0, 0.2);
         border: 1px dashed var(--border);
         border-radius: var(--radius-md);
-        margin-bottom: 3rem;
+        margin-bottom: 2rem; /* Spacing before the grid */
     }
 
     label {
@@ -202,8 +198,12 @@
     }
 
     /* --- CALENDAR GRID STYLES --- */
-    .calendar-container {
-        margin-top: 2rem;
+    .calendar-container h3 {
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--text);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
     }
 
     .calendar-grid {
@@ -261,6 +261,14 @@
         color: #ff4444;
         font-family: 'JetBrains Mono', monospace;
         margin-top: 1rem;
+    }
+
+    .auth-wrapper {
+        text-align: center;
+        padding: 3rem;
+        border: 1px dashed var(--border);
+        color: var(--text-muted);
+        font-style: italic;
     }
 
     @media (max-width: 700px) {
