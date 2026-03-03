@@ -98,12 +98,125 @@
 </section>
 
 <style>
-    .controls { margin: 0.5rem 0 1rem; display: flex; gap: 0.5rem; }
-    .error { margin: 0; }
-    .notice { padding: 0.75rem; border-radius: 12px; background: rgba(0,0,0,0.04); }
-    .todoList { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
-    .todoList li { padding: 0.75rem; border-radius: 12px; background: rgba(0,0,0,0.03); display: flex; justify-content: space-between; align-items: center; }
-    .todoList li.done { opacity: 0.7; text-decoration: line-through; }
-    .empty { opacity: 0.75; }
+    .panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        /* Adding the requested horizontal margin */
+        margin: 0 1.5rem;
+        box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-family: 'JetBrains Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        color: var(--primary);
+    }
+
+    .controls {
+        margin: 0.5rem 0 1.5rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: var(--radius-md);
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+
+    button:hover:not(:disabled) {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .todoList {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.75rem;
+    }
+
+    .todoList li {
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: border-color 0.2s ease;
+    }
+
+    .todoList li:hover {
+        border-color: var(--primary-hover);
+    }
+
+    .todoList li.done {
+        opacity: 0.5;
+        text-decoration: line-through;
+        border-color: transparent;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+        font-weight: 500;
+        color: var(--text);
+    }
+
+    .status {
+        color: var(--primary);
+        font-weight: 900;
+        font-size: 1.2rem;
+    }
+
+    .notice {
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        background: rgba(255, 0, 85, 0.05);
+        border: 1px dashed var(--primary);
+        color: var(--text);
+    }
+
+    .notice code {
+        background: rgba(0,0,0,0.3);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        color: var(--primary);
+    }
+
+    .error {
+        color: #ff4444;
+        font-family: 'JetBrains Mono', monospace;
+        background: rgba(255, 68, 68, 0.1);
+        padding: 1rem;
+        border-left: 4px solid #ff4444;
+    }
+
+    .empty {
+        opacity: 0.6;
+        font-style: italic;
+        text-align: center;
+        padding: 2rem;
+    }
+
     code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 </style>
