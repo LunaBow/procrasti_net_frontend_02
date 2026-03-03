@@ -197,5 +197,5 @@ export class ApiClient {
     }
 }
 
-const API_BASE = (import.meta.env.PUBLIC_API_URL || "https://mt231043-10992.node.ustp.cloud/api").replace(/\/$/, "");
+const API_BASE = (import.meta.env.PUBLIC_API_URL || "https://mt231043-10992.node.ustp.cloud/api" || "https://cors-anywhere.herokuapp.com/https://mt231043-10992.node.ustp.cloud/api").replace(/\/$/, "");
 export const api = new ApiClient(API_BASE);
