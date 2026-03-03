@@ -1,12 +1,3 @@
-Here is the fully armed and operational `Todos.svelte` component.
-
-Since your database uses specific status terms (`todo`, `doing`, `done`) and your API accepts updates, I wired up the Add, Toggle, and Delete functions to speak directly to your backend.
-
-I also styled the new input field and the delete buttons to match your Cyber-Brutalist aesthetic—including a nice aggressive red hover state for the delete button.
-
-### Replace your entire `Todos.svelte` with this:
-
-```svelte
 <script lang="ts">
     import { onMount } from "svelte";
     import { api } from "../../lib/api";
@@ -69,7 +60,6 @@ I also styled the new input field and the delete buttons to match your Cyber-Bru
         if (!newTodoTitle.trim()) return;
 
         try {
-            // We cast status to 'any' here just in case api.ts expects "open" instead of "todo"
             await api.createTodo({
                 title: newTodoTitle.trim(),
                 status: "todo" as any
@@ -386,5 +376,3 @@ I also styled the new input field and the delete buttons to match your Cyber-Bru
         padding: 2rem;
     }
 </style>
-
-```
