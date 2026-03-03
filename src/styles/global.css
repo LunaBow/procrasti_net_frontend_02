@@ -99,7 +99,7 @@ a:hover {
   padding: 1rem 0;
 }
 
-/* JoinContent wrapper */
+
 #JoinContent {
     display: flex;
     flex-direction: column;
@@ -497,8 +497,4 @@ button, .btn {
 
 input, select {
   font-family: inherit;
-}
-astro-island {
-    display: block;
-    width: 100%;
 }

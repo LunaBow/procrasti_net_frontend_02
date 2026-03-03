@@ -26,7 +26,7 @@
         error = "";
         needsLogin = false;
 
-        // If there's no token, don't even try
+        // If there's no token, skip me
         if (!api.token) {
             needsLogin = true;
             loading = false;
@@ -53,7 +53,6 @@
         refresh();
     });
 
-    // Optional: normalize fields if backend uses different names
     $: normalizedTodos = todos.map((t) => ({
         ...t,
         title: t.title ?? t.text ?? "(untitled)",

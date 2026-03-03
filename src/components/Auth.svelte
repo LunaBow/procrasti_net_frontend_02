@@ -3,7 +3,7 @@
     import { fade, fly } from "svelte/transition";
     import { cubicOut } from "svelte/easing";
 
-    let isOpen = false; // Controls the pill expansion
+    let isOpen = false;
     let isLogin = true;
     let error = "";
     let ok = "";
