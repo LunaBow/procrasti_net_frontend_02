@@ -1,27 +1,273 @@
 ---
-
-
+/* One file to rule them all. No external CSS needed. */
 ---
 
-<section id="Boot">
-    <div id="Bootsschule">
-        <h2>Ich habe in der Bootsfahrschule gelernt, dass...</h2>
-        <img src="/PICS/mrspuff.jpg" alt="Mrs.Puff is going to the looney bin" width="200" height="200">
-        <img src="/PICS/kms.jpg" alt="jk haha unless" width="200" height="200"></img>
-        <ul>
-            <li>We can do anything if we just believe in ourselves </li>
-            <li>No, just kidding, setup is not easy and we hate SQL. Luna is scared of backend and the campus:cloud. Honestly, I have no idea if I got it working. Edit: I did.</li>
-            <li>Oh, and taking on projects from the preliminary project is not great.</li>
-            <li>And we uploaded node modules even though we had it set not to which was fun (do you get a notification that some idiot uploaded 40gb and deleted it again? Sorry)</li>
-            <li>Coordinating group work when coding is tough, we couldn't have said it better than Andrea.</li>
-            <li>Autodeploy really dumb. </li>
-            <li>BEST-FRIENDSHIP WITH CAMPUS CLOUD ENDED. SEARCHING NEW BEST FRIEND</li>
-            <li>i wish we could use the console lol</li>
-            <li>hätte früher mein gehööörn benutzen sollen.</li>
-            <li>bitte sag mir das ich die Copilot desperete .mds gelöscht hab, bevor du ins projekt geschaut hast.</li>
+<div class="procrasti-container">
+    <section class="punk-card boots-section">
+        <header class="card-header">
+            <h2 class="glitch-text">BOOTSSCHULE LOG: 01:00 AM</h2>
+            <span class="status-tag">SYSTEM: CRITICAL</span>
+        </header>
 
+        <div class="image-grid">
+            <div class="img-wrapper">
+                <img src="/PICS/mrspuff.jpg" alt="Mrs.Puff is going to the looney bin" />
+                <span class="caption">MRS. PUFF STATUS: UNSTABLE</span>
+            </div>
+            <div class="img-wrapper">
+                <img src="/PICS/kms.jpg" alt="jk haha unless" />
+                <span class="caption">SQL VIBE CHECK</span>
+            </div>
+            <div class="img-wrapper">
+                <img src="/PICS/ithatesluna.png" alt="fml" />
+                <span class="caption">NODE_MODULES INCIDENT</span>
+            </div>
+        </div>
+
+        <ul class="rant-list">
+            <li>We can do anything if we just believe in ourselves (delusional).</li>
+            <li>Setup is a nightmare and we hate SQL. Luna vs. Campus Cloud is the beef of the century.</li>
+            <li>Preliminary projects are a trap. Avoid at all costs.</li>
+            <li>Sorry about the 40GB node_modules upload. We are idiots, but we are learning.</li>
+            <li>Coordinating group coding is basically a psychological experiment.</li>
+            <li>Autodeploy is a weapon of mass frustration.</li>
+            <li><strong>BEST-FRIENDSHIP WITH CAMPUS CLOUD ENDED.</strong></li>
+            <li>Wishing for a console is a daily ritual.</li>
+            <li>Hätte früher mein Gehööörn benutzen sollen.</li>
+            <li>Please tell me I deleted the Copilot Desperate .mds. Please.</li>
         </ul>
-    </div>
-</section>
+    </section>
 
+    <section class="punk-card philosophy-section">
+        <header class="card-header">
+            <h2>THE BARE-MINIMUM</h2>
+            <span class="status-tag accent">PROTOCOL: SURVIVAL</span>
+        </header>
 
+        <div class="grid-layout">
+            <div class="steps-column">
+                <ol class="step-list">
+                    <li>Wake the fuck up, Samurai. We have a city to burn.</li>
+                    <li>Pick <strong>ONE</strong> task. Just one. Don't be a hero.</li>
+                    <li>Cut it down until it’s as small as your will to live.</li>
+                    <li>30-minute timer. Then leave. Literally go away.</li>
+                    <li>You actually like this shit. Just <em>Shia LeBauf</em> "DO IT!"</li>
+                    <li>Reward yourself like a toddler: snack, sticker, cigarette.</li>
+                    <li>You got this, sweetie (unironically).</li>
+                    <li>Rinse, reboot, repeat.</li>
+                    <li>Bro, is that peanut butter? And a giant spoon? Valid.</li>
+                </ol>
+            </div>
+
+            <div class="manifesto-column">
+                <div class="manifesto-box">
+                    <p>
+                        <strong>PHILOSOPHY:</strong> Motivation is a scam, and discipline is shame wearing a suit.
+                        Capitalism thrives on you being tired and scared. If you’re exhausted, the machine is working.
+                    </p>
+                    <p>
+                        Your brain isn’t broken, the system is. Go check out <strong>Andrea Wu's Website</strong> to join the fight.
+                    </p>
+                    <p class="call-to-action">
+                        The gods allowed you to live another day. <br/>
+                        <strong>MAKE IT EVERYBODY ELSE'S PROBLEM.</strong>
+                    </p>
+                    <p class="fine-print">
+                        Tiny steps count. Bare minimum counts. “I showed up” counts.
+                        If you crash, you didn’t fail. Drink water. Breathe. Steal your life back one minute at a time.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    :root {
+        --bg: #0a0a0a;
+        --card-bg: #111;
+        --accent: #ff0055; /* Hot pink/Red */
+        --text: #e4e4e7;
+        --text-dim: #71717a;
+        --border: #27272a;
+    }
+
+    .procrasti-container {
+        font-family: 'JetBrains Mono', 'Figtree', sans-serif;
+        color: var(--text);
+        padding: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .punk-card {
+        background: var(--card-bg);
+        border: 2px solid var(--border);
+        box-shadow: 8px 8px 0px var(--border);
+        padding: 2rem;
+        position: relative;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    h2 {
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        font-weight: 900;
+        margin: 0;
+    }
+
+    .status-tag {
+        background: #27272a;
+        padding: 4px 12px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        border-radius: 4px;
+    }
+
+    .status-tag.accent {
+        background: var(--accent);
+        color: black;
+    }
+
+    /* IMAGE GRID */
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .img-wrapper {
+        border: 1px solid var(--border);
+        padding: 8px;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        filter: grayscale(1) contrast(1.2);
+        transition: filter 0.3s ease;
+    }
+
+    .img-wrapper:hover img {
+        filter: grayscale(0) contrast(1);
+    }
+
+    .caption {
+        font-size: 0.65rem;
+        color: var(--text-dim);
+        margin-top: 8px;
+        text-align: center;
+    }
+
+    /* LISTS */
+    .rant-list, .step-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .rant-list li::before {
+        content: ">> ";
+        color: var(--accent);
+    }
+
+    .rant-list li {
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .step-list {
+        counter-reset: step-counter;
+    }
+
+    .step-list li {
+        counter-increment: step-counter;
+        margin-bottom: 1rem;
+        padding-left: 3rem;
+        position: relative;
+    }
+
+    .step-list li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: var(--accent);
+        color: black;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        transform: rotate(-10deg);
+    }
+
+    /* MANIFESTO */
+    .grid-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .grid-layout { grid-template-columns: 1fr; }
+    }
+
+    .manifesto-box {
+        background: #000;
+        border: 1px dashed var(--accent);
+        padding: 1.5rem;
+        height: fit-content;
+    }
+
+    .manifesto-box p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .call-to-action {
+        color: var(--accent);
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 1.1rem !important;
+    }
+
+    .fine-print {
+        font-size: 0.75rem !important;
+        color: var(--text-dim);
+        border-top: 1px solid #222;
+        padding-top: 1rem;
+    }
+
+    .glitch-text:hover {
+        animation: glitch 0.3s infinite;
+    }
+
+    @keyframes glitch {
+        0% { transform: translate(0) }
+        20% { transform: translate(-2px, 2px) }
+        40% { transform: translate(-2px, -2px) }
+        60% { transform: translate(2px, 2px) }
+        80% { transform: translate(2px, -2px) }
+        100% { transform: translate(0) }
+    }
+</style>
