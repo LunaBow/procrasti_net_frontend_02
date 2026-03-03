@@ -3,6 +3,8 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "astro": "astro",
+    "check": "astro check",
     "dev": "astro dev",
     "build": "astro build",
     "start": "HOST=0.0.0.0 PORT=3000 node ./dist/server/entry.mjs",
